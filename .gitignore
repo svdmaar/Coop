@@ -1,12 +1,18 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-
-# Compiled Dynamic libraries
-*.so
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+*.suo
+*.ncb
+*.obj
+*.html
+*.htm
+*.ilk
+*.pdb
+*.idb
+*.dep
+*.exe
+ipch/
+*.opensdf
+*.sdf
+bin/intermediate
+bin/final/Coop.exe
+bin/final/Coop.ilk
+bin/final/Coop.pdb
+bin/final/Debug/log/*

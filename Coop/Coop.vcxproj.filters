@@ -1,0 +1,287 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <ClCompile Include="Application.cpp">
+      <Filter>Sources\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="AppState.cpp">
+      <Filter>Sources\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ErrorParser.cpp">
+      <Filter>Sources\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="Logger.cpp">
+      <Filter>Sources\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioFile.cpp">
+      <Filter>Sources\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioManager.cpp">
+      <Filter>Sources\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="AudioTrack.cpp">
+      <Filter>Sources\Audio</Filter>
+    </ClCompile>
+    <ClCompile Include="BasicObjects.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Bitmap.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="EshFile.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="FrameTimer.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsManager.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="GraphicsUtils.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="MatrixUtils.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="Button.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Font.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="FontDefs.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="Gui.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiElement.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="GuiEvent.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDevice.cpp">
+      <Filter>Sources\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputDeviceFactory.cpp">
+      <Filter>Sources\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="InputManager.cpp">
+      <Filter>Sources\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Joystick.cpp">
+      <Filter>Sources\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Keyboard.cpp">
+      <Filter>Sources\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="KeyboardSector.cpp">
+      <Filter>Sources\Input</Filter>
+    </ClCompile>
+    <ClCompile Include="Label.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="PictureBackground.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScreen.cpp">
+      <Filter>Sources\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerSelectScreen.cpp">
+      <Filter>Sources\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Screen.cpp">
+      <Filter>Sources\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="StringSelector.cpp">
+      <Filter>Sources\Gui</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScreen.cpp">
+      <Filter>Sources\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="WinMain.cpp">
+      <Filter>Sources\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="ScreenManager.cpp">
+      <Filter>Sources\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Objects2D.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="VertexBuffer.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Application.h">
+      <Filter>Headers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="AppState.h">
+      <Filter>Headers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="ErrorParser.h">
+      <Filter>Headers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="Logger.h">
+      <Filter>Headers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioFile.h">
+      <Filter>Headers\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioManager.h">
+      <Filter>Headers\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="AudioTrack.h">
+      <Filter>Headers\Audio</Filter>
+    </ClInclude>
+    <ClInclude Include="BasicObjects.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Bitmap.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="EshFile.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatRect.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="FrameTimer.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsManager.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="GraphicsUtils.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="Button.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Font.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="Gui.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiElement.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiEvent.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="GuiEventListener.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDevice.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputDeviceFactory.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="InputManager.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Joystick.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Keyboard.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="KeyboardSector.h">
+      <Filter>Headers\Input</Filter>
+    </ClInclude>
+    <ClInclude Include="Label.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScreen.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScreen.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Screen.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerSelectScreen.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="PictureBackground.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="MatrixUtils.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="StringSelector.h">
+      <Filter>Headers\Gui</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexTypes.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="ScreenManager.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Objects2D.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="FloatPoint.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="VertexBuffer.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <Filter Include="Headers">
+      <UniqueIdentifier>{98635c10-231d-4d32-b25b-faca51262f4c}</UniqueIdentifier>
+      <Extensions>*.h</Extensions>
+    </Filter>
+    <Filter Include="Sources">
+      <UniqueIdentifier>{79f1d26d-0849-416d-832a-e885b00747d0}</UniqueIdentifier>
+      <Extensions>.cpp</Extensions>
+    </Filter>
+    <Filter Include="Headers\Gui">
+      <UniqueIdentifier>{f0eab2e5-2b07-4d0b-907f-b8d45f4717eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Audio">
+      <UniqueIdentifier>{2d3a6582-7120-4106-b2c6-a799d19f644e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Input">
+      <UniqueIdentifier>{6a7a278e-750e-40e2-970f-cffc19ad65c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Screens">
+      <UniqueIdentifier>{cae8f2bc-0f4e-4be1-a7bc-e47b158f88af}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Graphics">
+      <UniqueIdentifier>{5ff68b41-409c-4d23-898b-69724bf480e3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Misc">
+      <UniqueIdentifier>{e6e378f7-9954-4dc1-b017-37517d56f05c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Misc">
+      <UniqueIdentifier>{4b4c1a01-470d-4d90-abfb-68c24bafa758}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Audio">
+      <UniqueIdentifier>{e635a42e-a25c-4267-99ef-8660595bc8cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Graphics">
+      <UniqueIdentifier>{8f0e7c12-369a-421d-9aaf-4239cc9d2951}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Gui">
+      <UniqueIdentifier>{dcebf53a-1129-4cab-a376-36a084c8e5c4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Input">
+      <UniqueIdentifier>{82600668-3d54-4e0a-a917-1cafa6f3ef40}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Screens">
+      <UniqueIdentifier>{0ade54ef-0ec2-4842-b46d-cb8b7b63694c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+</Project>
