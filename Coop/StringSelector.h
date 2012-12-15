@@ -2,6 +2,7 @@
 
 #include "GuiElement.h"
 #include "GraphicsManager.h"
+#include "VertexBuffer.h"
 
 #include <string>
 #include <vector>
@@ -19,10 +20,9 @@ enum ESSELECTOR_STATE
 class CStringSelector : public CGuiElement
 {
 	// Graphics.
-	IDirect3DVertexBuffer9 *m_pActiveVB;
-	IDirect3DVertexBuffer9 *m_pInactiveVB;
-	IDirect3DVertexBuffer9 *m_pLockedVB;
-	SFloatRect m_rInner;
+	CColoredVertexBuffer m_activeVertexBuffer;
+	CColoredVertexBuffer m_inactiveVertexBuffer;
+	CColoredVertexBuffer m_lockedVertexBuffer;
 
 	// Logic.
 	const StringVector *m_pStrings;

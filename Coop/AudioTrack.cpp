@@ -68,15 +68,15 @@ bool CAudioTrack::PlayAudioFile(const CAudioFile& _audioFile)
 	XAUDIO2_BUFFER buffer;
 	ZeroMemory(&buffer, sizeof(buffer));
 
-    buffer.Flags = XAUDIO2_END_OF_STREAM;
+	buffer.Flags = XAUDIO2_END_OF_STREAM;
 	buffer.AudioBytes = _audioFile.GetBufferSize();
 	buffer.pAudioData = (const BYTE *)_audioFile.GetData();
-    buffer.PlayBegin = 0;
-    buffer.PlayLength = dwSampleCount;
-    buffer.LoopBegin = 0;
-    buffer.LoopLength = dwSampleCount;
-    buffer.LoopCount = 0;
-    buffer.pContext = NULL;
+	buffer.PlayBegin = 0;
+	buffer.PlayLength = dwSampleCount;
+	buffer.LoopBegin = 0;
+	buffer.LoopLength = dwSampleCount;
+	buffer.LoopCount = 0;
+	buffer.pContext = NULL;
 
 	hr = m_pVoice->SubmitSourceBuffer(&buffer);
 	if(FAILED(hr))

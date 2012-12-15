@@ -19,32 +19,23 @@ bool CStringSelector::Init(SFloatRect _rPos, const StringVector *_pStrings)
 
 	m_pStrings = _pStrings;
 	m_iStringIndex = -1;
-	
-	m_rInner = _rPos;
-	m_rInner.m_fLeft += g_fOuterFrameSize;
-	m_rInner.m_fBottom += g_fOuterFrameSize;
-	m_rInner.m_fRight -= g_fOuterFrameSize;
-	m_rInner.m_fTop -= g_fOuterFrameSize;
-
-	if(!CGraphicsUtils::CreateColoredRectangle(m_rInner, &m_pActiveVB, 0xff008000L))
-	{
-		LogError("Failed to create active VB for string selector");
-		return false;
-	}
-
-	if(!CGraphicsUtils::CreateColoredRectangle(m_rInner, &m_pInactiveVB, 0xff0000ffL))
-	{
-		LogError("Failed to create inactive VB for string selector");
-		return false;
-	}
-
-	if(!CGraphicsUtils::CreateColoredRectangle(_rPos, &m_pLockedVB, 0xff800000L))
-	{
-		LogError("Failed to create locked VB for string selector");
-		return false;
-	}
-
 	m_eState = SELECTOR_INACTIVE;
+	
+	if(!m_activeVertexBuffer.Init(_rPos, 0xff008000L))
+	{
+		return false;
+	}
+
+	if(!m_inactiveVertexBuffer.Init(_rPos, 0xff0000ffL))
+	{
+		return false;
+	}
+
+	if(!m_lockedVertexBuffer.Init(_rPos, 0xff800000L))
+	{
+		return false;
+	}
+	
 
 	return true;
 }
@@ -53,11 +44,19 @@ bool CStringSelector::Render() const
 {
 	if((m_eState == SELECTOR_ACTIVE) || (m_eState == SELECTOR_LOCKED))
 	{
-		IDirect3DVertexBuffer9 *pRenderedBuffer = m_eState == SELECTOR_ACTIVE ? m_pActiveVB : m_pLockedVB;
-
-		if(!CGraphicsUtils::RenderVertexBuffer(pRenderedBuffer, sizeof(SColoredVertex), SColoredVertex::_fvf, D3DPT_TRIANGLELIST, 2))
+		if(m_eState == SELECTOR_ACTIVE)
 		{
-			return false;
+			if(!m_activeVertexBuffer.Render())
+			{
+				return false;
+			}
+		}
+		else
+		{
+			if(!m_lockedVertexBuffer.Render())
+			{
+				return false;
+			}
 		}
 
 		SFloatRect pos = GetPosition();
@@ -77,7 +76,7 @@ bool CStringSelector::Render() const
 	}
 	else
 	{
-		if(!CGraphicsUtils::RenderVertexBuffer(m_pInactiveVB, sizeof(SColoredVertex), SColoredVertex::_fvf, D3DPT_TRIANGLELIST, 2))
+		if(!m_inactiveVertexBuffer.Render())
 		{
 			return false;
 		}
@@ -88,8 +87,20 @@ bool CStringSelector::Render() const
 
 bool CStringSelector::CleanUp()
 {
-	m_pActiveVB->Release();
-	m_pInactiveVB->Release();
+	if(!m_activeVertexBuffer.CleanUp())
+	{
+		return false;
+	}
+
+	if(!m_inactiveVertexBuffer.CleanUp())
+	{
+		return false;
+	}
+
+	if(!m_lockedVertexBuffer.CleanUp())
+	{
+		return false;
+	}
 
 	if(!CGuiElement::CleanUp())
 	{

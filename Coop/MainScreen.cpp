@@ -37,6 +37,16 @@ bool CMainScreen::Render()
 		return false;
 	}
 
+	if(!m_texturedVertexBuffer.Render())
+	{
+		return false;
+	}
+
+	if(!m_coloredVertexBuffer.Render())
+	{
+		return false;
+	}
+
 	if(!pGraphicsManager->EndScene())
 	{
 		return false;
@@ -84,6 +94,27 @@ bool CMainScreen::Init()
 	if(!m_background.Init("bitmap/main_background.bmp"))
 	{
 		return false;
+	}
+
+	CBitmap bm("bitmap/coop_logo.bmp");
+	SFloatRect rect;
+
+	rect.m_fLeft = -50.0f;
+	rect.m_fRight = -40.0f;
+	rect.m_fTop = 20.0f;
+	rect.m_fBottom = 10.0f;
+
+	if(!m_texturedVertexBuffer.Init(bm, rect))
+	{
+		return false;
+	}
+
+	rect.m_fTop -= 20.0f;
+	rect.m_fBottom -= 20.0f;
+
+	if(!m_coloredVertexBuffer.Init(rect, 0xff00ff00l))
+	{
+		return true;
 	}
 
 	// Init buttons.
@@ -199,6 +230,16 @@ bool CMainScreen::InitAfterSwap()
 
 bool CMainScreen::CleanUp()
 {
+	if(!m_coloredVertexBuffer.CleanUp())
+	{
+		return false;
+	}
+
+	if(!m_texturedVertexBuffer.CleanUp())
+	{
+		return false;
+	}
+
 	if(!m_gui.CleanUp())
 	{
 		return false;
