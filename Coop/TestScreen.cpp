@@ -36,6 +36,7 @@ bool CTestScreen::Init()
 		return false;
 	}
 
+	/*
 	if(!m_sounds[0].Load("audio/chimes.wav")) return false;
 	if(!m_sounds[1].Load("audio/notify.wav")) return false;
 	if(!m_sounds[2].Load("audio/Speech Off.wav")) return false;
@@ -48,6 +49,7 @@ bool CTestScreen::Init()
 	if(!m_sounds[9].Load("audio/Windows Notify.wav")) return false;
 	if(!m_sounds[10].Load("audio/Windows Print complete.wav")) return false;
 	if(!m_sounds[11].Load("audio/Windows Ringin.wav")) return false;
+	*/
 
 	return true;
 }

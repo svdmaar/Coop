@@ -237,6 +237,9 @@
     <ClInclude Include="VertexBuffer.h">
       <Filter>Headers\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="BitmapTypes.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">

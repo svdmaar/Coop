@@ -1,6 +1,8 @@
 #pragma once
 
-#include <Windows.h>
+#include "BitmapTypes.h"
+
+//#include <Windows.h>
 #include <string>
 
 class CBitmap

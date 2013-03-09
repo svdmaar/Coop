@@ -6,7 +6,7 @@
 
 #include <assert.h>
 
-const bool g_bStartFullscreen = false;
+const bool g_bStartFullscreen = true;
 const int g_iStartWindowWidth = 1920 / 2;
 const int g_iStartWindowHeight = (1080 + 1200) / 2 / 2;
 const LPCWSTR g_className = L"Coop class";

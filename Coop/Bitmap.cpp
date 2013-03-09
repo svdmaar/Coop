@@ -1,6 +1,7 @@
 #include "Bitmap.h"
 
 #include <assert.h>
+#include <minmax.h>
 
 using namespace std;
 

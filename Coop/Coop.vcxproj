@@ -139,6 +139,7 @@
     <ClInclude Include="AudioTrack.h" />
     <ClInclude Include="BasicObjects.h" />
     <ClInclude Include="Bitmap.h" />
+    <ClInclude Include="BitmapTypes.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
     <ClInclude Include="ErrorParser.h" />
