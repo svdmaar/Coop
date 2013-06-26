@@ -4,9 +4,9 @@
 #include <Windows.h>
 #else
 
-#define DWORD unsigned long
+#define DWORD unsigned int
 #define BYTE unsigned char
-#define LONG long
+#define LONG int
 typedef unsigned short WORD;
 
 struct RECT
@@ -17,6 +17,7 @@ struct RECT
     LONG bottom;
 };
 
+#pragma pack(1)
 struct BITMAPFILEHEADER
 {
 	WORD bfType;
@@ -40,9 +41,11 @@ struct BITMAPINFOHEADER
 	DWORD biClrUsed;
 	DWORD biClrImportant;
 };
+#pragma pack()
 
 #endif // ifndef WIN32
 
+#pragma pack(1)
 struct SBitmapHeader
 {
 	WORD m_bfType;
@@ -62,3 +65,5 @@ struct SBitmapHeader
 	DWORD m_biClrUsed;
 	DWORD m_biClrImportant;
 };
+#pragma pack()
+

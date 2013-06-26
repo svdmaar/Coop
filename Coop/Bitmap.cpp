@@ -1,7 +1,16 @@
 #include "Bitmap.h"
 
 #include <assert.h>
-#include <minmax.h>
+#include <memory.h>
+#include <stdio.h>
+
+#ifndef min
+#define min(a, b)  (((a) < (b)) ? (a) : (b)) 
+#endif
+
+#ifndef max
+#define max(a, b)  (((a) > (b)) ? (a) : (b)) 
+#endif
 
 using namespace std;
 
@@ -90,7 +99,7 @@ bool CBitmap::Load(string _fileName)
 {
 	// TODO: deal with negative height
 	FILE *pInFile = NULL;
-	fopen_s(&pInFile, _fileName.c_str(), "rb");
+	pInFile = fopen(_fileName.c_str(), "rb");
 
 	if(pInFile == NULL)
 		return false;
@@ -175,7 +184,7 @@ bool CBitmap::Save(string _fileName) const
 	infoHeader.biClrImportant = 0;
 	
 	FILE *pOutFile = NULL;
-	fopen_s(&pOutFile, _fileName.c_str(), "wb");
+	pOutFile = fopen(_fileName.c_str(), "wb");
 	fwrite(&fileHeader, sizeof(fileHeader), 1, pOutFile);
 	fwrite(&infoHeader, sizeof(infoHeader), 1, pOutFile);
 	
