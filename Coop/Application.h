@@ -8,6 +8,7 @@
 #include "ScreenManager.h"
 #include "AudioManager.h"
 #include "AppState.h"
+#include "TextureManager.h"
 
 #include <Windows.h>
 #include <string>
@@ -24,6 +25,7 @@ class CApplication
 	CScreenManager m_screenManager;
 	CAudioManager m_audioManager;
 	CAppState m_appState;
+	CTextureManager m_textureManager;
 
 	bool _Init();
 	bool _CleanUp();

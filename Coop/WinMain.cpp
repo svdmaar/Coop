@@ -1,7 +1,12 @@
 #include "Application.h"
 
+#include "CreatePacmanSprites.h"
+
 int APIENTRY WinMain(HINSTANCE _hInstance, HINSTANCE, LPSTR _lpCmdLine, int)
 {
+	//CreateAllPacmanSprites();
+	//return 0;
+
 	CApplication app(_hInstance);
 	return app.Main(_lpCmdLine);
 }

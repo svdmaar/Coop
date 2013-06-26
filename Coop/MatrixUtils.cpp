@@ -58,8 +58,10 @@ D3DXMATRIX CMatrixUtils::FillIsoMatrix()
 	return out;
 }
 
-static void writeMatrixToFile(string _prefix, string _matrixName, const D3DMATRIX & _matrix, ofstream & _outFile)
+void CMatrixUtils::_WriteMatrixToFile(string _prefix, string _matrixName, const D3DMATRIX & _matrix,
+	ofstream & _outFile)
 {
+	_outFile << 
 	_outFile << _prefix.c_str() << _matrixName.c_str() << " = " << flush;
 	_outFile << "[ " << _matrix._11 << " " << _matrix._21 << " " << _matrix._31 << " " << _matrix._41
 			 << "; " << _matrix._12 << " " << _matrix._22 << " " << _matrix._32 << " " << _matrix._42
@@ -99,9 +101,9 @@ bool CMatrixUtils::WriteMatricesToFile(std::string _fileName, std::string _prefi
 
 	ofstream outFile(_fileName);
 
- 	writeMatrixToFile(_prefix, "world", worldMatrix, outFile);
-	writeMatrixToFile(_prefix, "view", viewMatrix, outFile);
-	writeMatrixToFile(_prefix, "projection", projectionMatrix, outFile);
+ 	_WriteMatrixToFile(_prefix, "world", worldMatrix, outFile);
+	_WriteMatrixToFile(_prefix, "view", viewMatrix, outFile);
+	_WriteMatrixToFile(_prefix, "projection", projectionMatrix, outFile);
 
 	return true;
 }

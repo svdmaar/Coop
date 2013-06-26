@@ -34,8 +34,7 @@ bool CScreen::CleanUp()
 
 bool CScreen::SetDefaultGraphicsSettings2D()
 {
-		HRESULT hr;
-
+	HRESULT hr;
 	CGraphicsManager *pGraphicsManager = CGraphicsManager::GetInstance();
 	IDirect3DDevice9 *pDevice = pGraphicsManager->GetDevice();
 

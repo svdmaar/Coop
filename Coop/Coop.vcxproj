@@ -92,6 +92,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AppState.cpp" />
     <ClCompile Include="AudioFile.cpp" />
@@ -101,6 +102,9 @@
     <ClCompile Include="Bitmap.cpp" />
     <ClCompile Include="Button.cpp" />
     <ClCompile Include="Camera.cpp" />
+    <ClCompile Include="CreatePacmanSprites.cpp" />
+    <ClCompile Include="DataMap.cpp" />
+    <ClCompile Include="DataMapExt.cpp" />
     <ClCompile Include="ErrorParser.cpp" />
     <ClCompile Include="EshFile.cpp" />
     <ClCompile Include="Font.cpp" />
@@ -120,11 +124,19 @@
     <ClCompile Include="Label.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="MainScreen.cpp" />
+    <ClCompile Include="MatrixInspector.cpp" />
     <ClCompile Include="MatrixUtils.cpp" />
     <ClCompile Include="Objects2D.cpp" />
+    <ClCompile Include="PacmanBoard.cpp" />
+    <ClCompile Include="PacmanGameState.cpp" />
+    <ClCompile Include="PacmanPlayer.cpp" />
+    <ClCompile Include="PacmanScreen.cpp" />
     <ClCompile Include="PictureBackground.cpp" />
     <ClCompile Include="PlayerSelectScreen.cpp" />
+    <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="StringSelector.cpp" />
+    <ClCompile Include="TestScreen2D.cpp" />
+    <ClCompile Include="TextureManager.cpp" />
     <ClCompile Include="VertexBuffer.cpp" />
     <ClCompile Include="WinMain.cpp" />
     <ClCompile Include="ScreenManager.cpp" />
@@ -132,6 +144,7 @@
     <ClCompile Include="TestScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AppState.h" />
     <ClInclude Include="AudioFile.h" />
@@ -142,6 +155,9 @@
     <ClInclude Include="BitmapTypes.h" />
     <ClInclude Include="Button.h" />
     <ClInclude Include="Camera.h" />
+    <ClInclude Include="CreatePacmanSprites.h" />
+    <ClInclude Include="DataMap.h" />
+    <ClInclude Include="DataMapExt.h" />
     <ClInclude Include="ErrorParser.h" />
     <ClInclude Include="EshFile.h" />
     <ClInclude Include="FloatPoint.h" />
@@ -163,14 +179,22 @@
     <ClInclude Include="Label.h" />
     <ClInclude Include="Logger.h" />
     <ClInclude Include="MainScreen.h" />
+    <ClInclude Include="MatrixInspector.h" />
     <ClInclude Include="MatrixUtils.h" />
     <ClInclude Include="Objects2D.h" />
+    <ClInclude Include="PacmanBoard.h" />
+    <ClInclude Include="PacmanGameState.h" />
+    <ClInclude Include="PacmanPlayer.h" />
+    <ClInclude Include="PacmanScreen.h" />
     <ClInclude Include="PictureBackground.h" />
     <ClInclude Include="PlayerSelectScreen.h" />
     <ClInclude Include="ScreenManager.h" />
     <ClInclude Include="Screen.h" />
+    <ClInclude Include="Sprite.h" />
     <ClInclude Include="StringSelector.h" />
     <ClInclude Include="TestScreen.h" />
+    <ClInclude Include="TestScreen2D.h" />
+    <ClInclude Include="TextureManager.h" />
     <ClInclude Include="VertexBuffer.h" />
     <ClInclude Include="VertexTypes.h" />
   </ItemGroup>

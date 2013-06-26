@@ -310,9 +310,14 @@ CImageObject::~CImageObject()
 {
 }
 
-bool CImageObject::Init(const SObject2DDesc& _desc, const SFloatRect& _pos, const CBitmap& _bitmap)
+bool CImageObject::Init(const SFloatRect& _pos, const CBitmap& _bitmap)
 {
-	if(!CObject2D::_Init(_desc, _pos))
+	SObject2DDesc desc;
+	
+	ZeroMemory(&desc, sizeof(desc));
+	desc.m_eType = otAll;
+
+	if(!CObject2D::_Init(desc, _pos))
 	{
 		return false;
 	}
@@ -353,6 +358,45 @@ bool CImageObject::Render() const
 	if(FAILED(hr))
 	{
 		LogErrorHr("Failed to reset texture", hr);
+		return false;
+	}
+
+	return true;
+}
+
+bool CImageObject::Render(const SFloatPoint & _offset) const
+{
+	HRESULT hr;
+
+	CGraphicsManager *pGraphicsManager = CGraphicsManager::GetInstance();
+	IDirect3DDevice9 *pDevice = pGraphicsManager->GetDevice();
+	D3DXMATRIX orgMatrix, translateMatrix;
+
+	hr = pDevice->GetTransform(D3DTS_WORLD, &orgMatrix);
+	if(FAILED(hr))
+	{
+		LogErrorHr("Failed to get transform", hr);
+		return false;
+	}
+
+	D3DXMatrixTranslation(&translateMatrix, _offset.m_fX, _offset.m_fY, 0.0f);
+
+	hr = pDevice->SetTransform(D3DTS_WORLD, &translateMatrix);
+	if(FAILED(hr))
+	{
+		LogErrorHr("Failed to multiply transform", hr);
+		return false;
+	}
+
+	if(!Render())
+	{
+		return false;
+	}
+
+	hr = pDevice->SetTransform(D3DTS_WORLD, &orgMatrix);
+	if(FAILED(hr))
+	{
+		LogErrorHr("Failed to restore transform", hr);
 		return false;
 	}
 

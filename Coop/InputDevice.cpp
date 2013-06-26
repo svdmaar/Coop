@@ -216,3 +216,29 @@ bool CInputDevice::JustReceivedAnyInput() const
 
 	return false;
 }
+
+E_DPADDIRECTION CInputDevice::GetDPadDirection(bool & _bInput) const
+{
+	float fX = GetDPadXAxis();
+	float fY = GetDPadYAxis();
+	float fMaxDir = max(fabsf(fX), fabsf(fY));
+	E_DPADDIRECTION eDir = DIR_RIGHT;
+
+	if(fMaxDir < 0.005f)
+	{
+		_bInput = false;
+		return eDir;
+	}
+
+	_bInput = true;
+	if (fabsf(fX) >= fabsf(fY))
+	{
+		eDir = fX > 0.0f ? DIR_RIGHT : DIR_LEFT;
+	}
+	else
+	{
+		eDir = fY > 0.0f ? DIR_TOP : DIR_BOTTOM;
+	}
+
+	return eDir;
+}

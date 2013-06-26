@@ -101,11 +101,22 @@ bool CApplication::_Init()
 		return false;
 	}
 
+	if(!m_textureManager.Init())
+	{
+		return false;
+	}
+
 	return true;
 }
 
 bool CApplication::_CleanUp()
 {
+	if(!m_textureManager.CleanUp())
+	{
+		LogError("Failed to clean up texture manager");
+		return false;
+	}
+
 	if(!m_screenManager.CleanUp())
 	{
 		LogError("Failed to clean up screen manager");

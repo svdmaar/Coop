@@ -673,7 +673,8 @@ bool CBasicObjects::_FillBoxVBNormal()
 		return false;
 	}
 
-	hr = pDevice->CreateVertexBuffer(sizeof(boxTriangles), 0, SNormalVertex::_fvf, D3DPOOL_DEFAULT, &m_pNormalBox, NULL);
+	hr = pDevice->CreateVertexBuffer(sizeof(boxTriangles), 0, SNormalVertex::_fvf, D3DPOOL_DEFAULT, &m_pNormalBox,
+		NULL);
 	if(FAILED(hr))
 	{
 		LogErrorHr("Failed to create vertex buffer for normal box", hr);

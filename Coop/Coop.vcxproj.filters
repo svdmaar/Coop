@@ -115,6 +115,42 @@
     <ClCompile Include="VertexBuffer.cpp">
       <Filter>Sources\Graphics</Filter>
     </ClCompile>
+    <ClCompile Include="MatrixInspector.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TestScreen2D.cpp">
+      <Filter>Sources\Screens</Filter>
+    </ClCompile>
+    <ClCompile Include="Sprite.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="PacmanScreen.cpp">
+      <Filter>Sources\Game - Pacman</Filter>
+    </ClCompile>
+    <ClCompile Include="PacmanGameState.cpp">
+      <Filter>Sources\Game - Pacman</Filter>
+    </ClCompile>
+    <ClCompile Include="DataMap.cpp">
+      <Filter>Sources\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="DataMapExt.cpp">
+      <Filter>Sources\Misc</Filter>
+    </ClCompile>
+    <ClCompile Include="PacmanBoard.cpp">
+      <Filter>Sources\Game - Pacman</Filter>
+    </ClCompile>
+    <ClCompile Include="AnimatedSprite.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="TextureManager.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="PacmanPlayer.cpp">
+      <Filter>Sources\Game - Pacman</Filter>
+    </ClCompile>
+    <ClCompile Include="CreatePacmanSprites.cpp">
+      <Filter>Sources\Game - Pacman</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -240,6 +276,42 @@
     <ClInclude Include="BitmapTypes.h">
       <Filter>Headers\Graphics</Filter>
     </ClInclude>
+    <ClInclude Include="MatrixInspector.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TestScreen2D.h">
+      <Filter>Headers\Screens</Filter>
+    </ClInclude>
+    <ClInclude Include="Sprite.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="PacmanScreen.h">
+      <Filter>Headers\Game - Pacman</Filter>
+    </ClInclude>
+    <ClInclude Include="PacmanGameState.h">
+      <Filter>Headers\Game - Pacman</Filter>
+    </ClInclude>
+    <ClInclude Include="DataMap.h">
+      <Filter>Headers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="DataMapExt.h">
+      <Filter>Headers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="CreatePacmanSprites.h">
+      <Filter>Headers\Misc</Filter>
+    </ClInclude>
+    <ClInclude Include="PacmanBoard.h">
+      <Filter>Headers\Game - Pacman</Filter>
+    </ClInclude>
+    <ClInclude Include="AnimatedSprite.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="TextureManager.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="PacmanPlayer.h">
+      <Filter>Headers\Game - Pacman</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Headers">
@@ -285,6 +357,12 @@
     </Filter>
     <Filter Include="Sources\Screens">
       <UniqueIdentifier>{0ade54ef-0ec2-4842-b46d-cb8b7b63694c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Sources\Game - Pacman">
+      <UniqueIdentifier>{85635a04-7462-4a8f-94e0-d7fcc3e9e776}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Headers\Game - Pacman">
+      <UniqueIdentifier>{64cc5cd0-884b-472d-9209-fb7992485f24}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

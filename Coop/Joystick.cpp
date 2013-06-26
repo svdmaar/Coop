@@ -33,7 +33,7 @@ static BOOL __stdcall DirectInputObjectCallback(LPCDIDEVICEOBJECTINSTANCE lpddoi
 	return TRUE;
 }
 
-BOOL FAR PASCAL DirectInputEffectCallback(LPCDIEFFECTINFOW pdei, LPVOID pvRef)
+static BOOL FAR PASCAL DirectInputEffectCallback(LPCDIEFFECTINFOW pdei, LPVOID pvRef)
 {
 	EffectInfoVector *pEffectVector = (EffectInfoVector *)pvRef;
 	pEffectVector->push_back(*pdei);

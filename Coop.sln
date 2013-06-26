@@ -3,6 +3,8 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Coop", "Coop\Coop.vcxproj", "{FE64C6E8-14DA-44FA-AD89-FB515D95CEBA}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpriteUtils", "SpriteUtils\SpriteUtils.vcxproj", "{CA908B35-D4DF-4A34-8A1C-A5A9DA5A3BBE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +15,10 @@ Global
 		{FE64C6E8-14DA-44FA-AD89-FB515D95CEBA}.Debug|Win32.Build.0 = Debug|Win32
 		{FE64C6E8-14DA-44FA-AD89-FB515D95CEBA}.Release|Win32.ActiveCfg = Release|Win32
 		{FE64C6E8-14DA-44FA-AD89-FB515D95CEBA}.Release|Win32.Build.0 = Release|Win32
+		{CA908B35-D4DF-4A34-8A1C-A5A9DA5A3BBE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{CA908B35-D4DF-4A34-8A1C-A5A9DA5A3BBE}.Debug|Win32.Build.0 = Debug|Win32
+		{CA908B35-D4DF-4A34-8A1C-A5A9DA5A3BBE}.Release|Win32.ActiveCfg = Release|Win32
+		{CA908B35-D4DF-4A34-8A1C-A5A9DA5A3BBE}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

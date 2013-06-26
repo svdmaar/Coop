@@ -71,7 +71,8 @@ public:
 	CImageObject();
 	~CImageObject();
 
-	bool Init(const SObject2DDesc& _desc, const SFloatRect& _pos, const CBitmap& _bitmap);
+	bool Init(const SFloatRect& _pos, const CBitmap& _bitmap);
 	bool Render() const;
+	bool Render(const SFloatPoint & _offset) const;
 	bool CleanUp();
 };

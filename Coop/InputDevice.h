@@ -38,7 +38,7 @@ class CInputDevice
 	bool m_bJoystick1InDir[4];
 	bool m_bJoystick1JustInDir[4];
 
-	void _UpdateJoystickDir(bool _bDownNow, bool& _bDownPrev, bool& _bJustDown);
+	void _UpdateJoystickDir(bool _bDownNow, bool & _bDownPrev, bool & _bJustDown);
 
 	virtual bool _OnStateUpdateRequest() = 0;
 	virtual bool _ButtonIsDown(int _iButtonIndex) const = 0;
@@ -72,6 +72,7 @@ public:
 	bool DPadIsJustPressed(E_DPADDIRECTION _eDir) const;
 	bool ButtonIsDown(int _iButtonIndex) const;
 	bool JustReceivedAnyInput() const;
+	E_DPADDIRECTION GetDPadDirection(bool & _bInput) const;
 };
 
 typedef std::vector<CInputDevice *> InputDeviceVector;

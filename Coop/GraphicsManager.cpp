@@ -6,9 +6,16 @@
 
 #include <assert.h>
 
-const bool g_bStartFullscreen = true;
+#if 1
+const bool g_bStartFullscreen = false;
 const int g_iStartWindowWidth = 1920 / 2;
 const int g_iStartWindowHeight = (1080 + 1200) / 2 / 2;
+#else
+const bool g_bStartFullscreen = true;
+const int g_iStartWindowWidth = 1920;
+const int g_iStartWindowHeight = 1200;
+#endif
+
 const LPCWSTR g_className = L"Coop class";
 const LPCWSTR g_windowName = L"Coop";
 
@@ -416,14 +423,14 @@ bool CGraphicsManager::CreateTexture(const CBitmap& _bitmap, IDirect3DTexture9 *
 	hr = m_pD3Device->CreateTexture(iWidth, iHeight, 1, 0, D3DFMT_X8R8G8B8, D3DPOOL_DEFAULT, _ppTexture, NULL);
 	if(FAILED(hr))
 	{
-		LogErrorHr("Failed to create font video texture", hr);
+		LogErrorHr("Failed to create video texture", hr);
 		return false;
 	}
 
 	hr = m_pD3Device->UpdateTexture(pSystemTexture, *_ppTexture);
 	if(FAILED(hr))
 	{
-		LogErrorHr("Failed to update font video texture", hr);
+		LogErrorHr("Failed to update video texture", hr);
 		return false;
 	}
 

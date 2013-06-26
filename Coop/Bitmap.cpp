@@ -35,8 +35,14 @@ CBitmap::CBitmap(int _iWidth, int _iHeight, DWORD _dwColor)
 	m_iWidth = _iWidth;
 	m_iHeight = _iHeight;
 	
-	m_pData = new DWORD[m_iWidth * m_iHeight];
-	memset(m_pData, _dwColor, sizeof(DWORD) * m_iWidth * m_iHeight);
+	int iPixelCount = m_iWidth * m_iHeight;
+	m_pData = new DWORD[iPixelCount];
+	//memset(m_pData, _dwColor, sizeof(DWORD) * m_iWidth * m_iHeight);
+
+	for(int i = 0; i < iPixelCount; i++)
+	{
+		m_pData[i] = _dwColor;
+	}
 }
 
 CBitmap::CBitmap(const CBitmap& _bmp)
@@ -265,8 +271,8 @@ CBitmap CBitmap::GetSubBitmap(RECT _rect) const
 {
 	CBitmap out(_rect);
 
-	assert(_rect.right < m_iWidth);	
-	assert(_rect.bottom < m_iHeight);
+	assert(_rect.right <= m_iWidth);	
+	assert(_rect.bottom <= m_iHeight);
 
 	for(int iOutRowIndex = 0; iOutRowIndex < out.GetHeight(); iOutRowIndex++)
 	{
