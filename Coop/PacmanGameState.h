@@ -1,14 +1,20 @@
 #pragma once
 
-#include "DataMapExt.h"
+#include "PacmanBoard.h"
 
 class CPacmanGameState
 {
-	CDataMapExt<bool> m_Dots;
-
-	int _CountDots();
+	CPacmanBoard m_board;
+	bool m_bInited;
 
 public:
+	CPacmanGameState();
+	~CPacmanGameState();
 
+	bool Init();
+	bool CleanUp();
+
+	bool Update();
+	bool Render();
 
 };
