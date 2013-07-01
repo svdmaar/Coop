@@ -91,15 +91,6 @@ bool CPacmanPlayer::CleanUp()
 
 bool CPacmanPlayer::Update()
 {
-	/*
-	CFrameTimer * pFrameTimer = CFrameTimer::GetInstance();
-
-	float fDeltaT = (float)pFrameTimer->GetDeltaT();
-	fDeltaT /= 50.0f;
-
-	m_pos.m_fX += fDeltaT;
-	*/
-
 	bool bInput = false;
 	E_DPADDIRECTION eDir = m_pInputDevice->GetDPadDirection(bInput);
 
@@ -197,4 +188,29 @@ void CPacmanPlayer::_AddDirection()
 		m_pos.m_fY -= fOffset;
 		break;
 	}
+}
+
+bool CPacmanPlayer::ResizeSprites(float _fSize)
+{
+	if(!m_asLeft.Resize(_fSize))
+	{
+		return false;
+	}
+	
+	if(!m_asRight.Resize(_fSize))
+	{
+		return false;
+	}
+	
+	if(!m_asTop.Resize(_fSize))
+	{
+		return false;
+	}
+	
+	if(!m_asBottom.Resize(_fSize))
+	{
+		return false;
+	}
+
+	return true;
 }

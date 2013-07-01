@@ -7,7 +7,6 @@ class CScreenManager;
 
 class CScreen
 {
-	CScreenManager *m_pScreenManager;
 
 public:
 	CScreen();

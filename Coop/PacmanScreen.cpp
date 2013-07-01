@@ -22,36 +22,14 @@ CPacmanScreen::~CPacmanScreen()
 
 bool CPacmanScreen::Init()
 {
-	int i;
-	SFloatRect rPos;
-	CBitmap bm;
-
-	ZeroMemory(&rPos, sizeof(rPos));
-	rPos.m_fBottom = 0.0f;
-	rPos.m_fTop = 10.0f;
-	rPos.m_fLeft = 0.0f;
-	rPos.m_fRight = 10.0f;
-
 	if(!CScreen::Init())
 	{
 		return false;
 	}
 
-	if(!bm.Load("bitmap/pacman_dot.bmp"))
+	if(!m_gameState.Init())
 	{
-		LogError("Failed to load dot bitmap");
 		return false;
-	}
-
-	if(!m_objDot.Init(rPos, bm))
-	{
-		LogError("Failed to init dot object");
-		return false;
-	}
-
-	for(i = 0; i < g_iPacmanBoardHeight * g_iPacmanBoardWidth; i++)
-	{
-		m_bDots[i] = true;
 	}
 
 	return true;
@@ -74,7 +52,7 @@ bool CPacmanScreen::InitAfterSwap()
 
 bool CPacmanScreen::CleanUp()
 {
-	if(!m_objDot.CleanUp())
+	if(!m_gameState.CleanUp())
 	{
 		return false;
 	}
@@ -96,12 +74,17 @@ bool CPacmanScreen::Render()
 {
 	CGraphicsManager *pGraphicsManager = CGraphicsManager::GetInstance();
 
+	if(!m_gameState.Update())
+	{
+		return false;
+	}
+
 	if(!pGraphicsManager->BeginScene())
 	{
 		return false;
 	}
 
-	if(!_RenderBoard())
+	if(!m_gameState.Render())
 	{
 		return false;
 	}
@@ -114,6 +97,7 @@ bool CPacmanScreen::Render()
 	return true;
 }
 
+/*
 bool CPacmanScreen::_RenderBoard()
 {
 	SFloatRect screenRect = CGui::GetScreenRect();
@@ -126,12 +110,6 @@ bool CPacmanScreen::_RenderBoard()
 	offset.m_fX = upperLeft.m_fX; // + (float)iColumnIndex;
 	offset.m_fY = upperLeft.m_fY; // - (float)iRowIndex;
 
-	/*
-	if(!m_objDot.Render())
-	{
-		return false;
-	}
-	*/
 
 	CMatrixInspector ins;
 	ins.Update();
@@ -142,9 +120,6 @@ bool CPacmanScreen::_RenderBoard()
 	D3DXMatrixIdentity(&matIden);
 	
 	IDirect3DDevice9 * pDev = CGraphicsManager::GetInstance()->GetDevice();
-/*	hr = pDev->SetTransform(D3DTS_WORLD, &matIden);
-	hr = pDev->SetTransform(D3DTS_VIEW, &matIden);
-	hr = pDev->SetTransform(D3DTS_PROJECTION, &matIden);*/
 	
 	ins.Update();
 	dbg = ins.ProjectVector(D3DXVECTOR3(0, 1, 0));
@@ -183,7 +158,6 @@ bool CPacmanScreen::_RenderBoard()
 	return true;
 
 
-	/*
 	for(int iRowIndex = 0; iRowIndex < g_iPacmanBoardHeight; iRowIndex++)
 	{
 		for(int iColumnIndex = 0; iColumnIndex < g_iPacmanBoardWidth; iColumnIndex++)
@@ -201,7 +175,7 @@ bool CPacmanScreen::_RenderBoard()
 			}
 		}
 	}
-	*/
 
 	return true;
 }
+*/

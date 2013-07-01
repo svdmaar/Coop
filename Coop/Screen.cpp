@@ -229,21 +229,21 @@ bool CScreen::SetDefaultGraphicsSettings3D()
 		return false;
 	}
 
-	hr = pDevice->SetSamplerState( 0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR );
+	hr = pDevice->SetSamplerState(0, D3DSAMP_MINFILTER, D3DTEXF_LINEAR);
 	if(FAILED(hr))
 	{
 		LogErrorHr("Failed to set sampler state - MINFILTER", hr);
 		return false;
 	}
 
-	hr = pDevice->SetSamplerState( 0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR );
+	hr = pDevice->SetSamplerState(0, D3DSAMP_MAGFILTER, D3DTEXF_LINEAR);
 	if(FAILED(hr))
 	{
 		LogErrorHr("Failed to set sampler state - MAGFILTER", hr);
 		return false;
 	}
 
-	hr = pDevice->SetSamplerState( 0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR );
+	hr = pDevice->SetSamplerState(0, D3DSAMP_MIPFILTER, D3DTEXF_LINEAR);
 	if(FAILED(hr))
 	{
 		LogErrorHr("Failed to set sampler state - MIPFILTER", hr);

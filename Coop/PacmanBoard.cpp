@@ -33,6 +33,13 @@ bool CPacmanBoard::Init()
 		return false;
 	}
 
+	if(!_InitDot())
+	{
+		return false;
+	}
+
+	m_bInited = true;
+
 	return true;
 }
 
@@ -45,6 +52,8 @@ bool CPacmanBoard::CleanUp()
 		return false;
 	}
 
+	m_bInited = false;
+	
 	return true;
 }
 
@@ -57,11 +66,14 @@ bool CPacmanBoard::Render()
 {
 	int iWidth = m_squares.GetWidth();
 	int iHeight = m_squares.GetHeight();
-	const float fSquareSize = 8.0f;
+	float fSquareSize = m_asWalls[0].GetSize().m_fX;
 
 	SFloatPoint pUpperLeft;
 	pUpperLeft.m_fX = -fSquareSize * ((float)iWidth) / 2.0f;
 	pUpperLeft.m_fY = fSquareSize * ((float)iHeight) / 2.0f;
+
+	pUpperLeft.m_fX += fSquareSize / 2.0f;
+	pUpperLeft.m_fY += fSquareSize / 2.0f;
 
 	for(int iRowIndex = 0; iRowIndex < iHeight; iRowIndex++)
 	{
@@ -75,7 +87,8 @@ bool CPacmanBoard::Render()
 
 			if(square.m_bWall)
 			{
-				if(!m_asWalls[0].Render(0, pPos))
+				int iWallIndex = square.m_iWallIndex;
+				if(!m_asWalls[iWallIndex].Render(0, pPos))
 				{
 					return false;
 				}
@@ -130,7 +143,7 @@ bool CPacmanBoard::_InitSquares()
 			{
 				square.m_bDotRemaining = false;
 				square.m_bWall = true;
-				square.m_iWallIndex = 0;
+				square.m_iWallIndex = _GetWallSpriteIndex(iRowIndex, iColumnIndex);
 			}
 
 			m_squares.SetValue(iRowIndex, iColumnIndex, square);
@@ -199,5 +212,102 @@ bool CPacmanBoard::_CleanUpSprites()
 		return false;
 	}
 
+	return true;
+}
+
+DWORD CPacmanBoard::_GetPixelSafe(int _iRowIndex, int _iColumnIndex, DWORD _dwDefault)
+{
+	if((_iRowIndex >= 0) && (_iRowIndex < m_bmMap.GetHeight()) &&
+		(_iColumnIndex >= 0) && (_iColumnIndex < m_bmMap.GetWidth()))
+	{
+		return m_bmMap.GetPixel(_iRowIndex, _iColumnIndex);		
+	}
+
+	return _dwDefault;
+}
+
+int CPacmanBoard::_GetWallSpriteIndex(int _iRowIndex, int _iColumnIndex)
+{
+	DWORD dwThis = m_bmMap.GetPixel(_iRowIndex, _iColumnIndex);
+	DWORD dwLeft = _GetPixelSafe(_iRowIndex, _iColumnIndex - 1, 0xffffffL);
+	DWORD dwRight = _GetPixelSafe(_iRowIndex, _iColumnIndex + 1, 0xffffffL);
+	DWORD dwTop = _GetPixelSafe(_iRowIndex - 1, _iColumnIndex, 0xffffffL);
+	DWORD dwBottom = _GetPixelSafe(_iRowIndex + 1, _iColumnIndex, 0xffffffL);
+
+	assert(dwThis == 0);
+
+	int iIndex = 0;
+
+	if(dwTop == 0)
+	{
+		iIndex += 1;
+	}
+
+	if(dwRight == 0)
+	{
+		iIndex += 2;
+	}
+
+	if(dwBottom == 0)
+	{
+		iIndex += 4;
+	}
+
+	if(dwLeft == 0)
+	{
+		iIndex += 8;
+	}
+
+	iIndex = 15 - iIndex;
+	return iIndex;
+}
+
+int CPacmanBoard::GetWidth() const
+{
+	return m_squares.GetWidth();
+}
+
+int CPacmanBoard::GetHeight() const
+{
+	return m_squares.GetHeight();
+}
+
+bool CPacmanBoard::ResizeSprites(float _fSize)
+{
+	for(int i = 0; i < g_iWallSpriteCount; i++)
+	{
+		if(!m_asWalls[i].Resize(_fSize))
+		{
+			return false;
+		}
+	}
+
+	if(!m_asDot.Resize(_fSize))
+	{
+		return false;
+	}
+
+	return true;
+}
+
+void CPacmanBoard::_AddSpotToVector(int _iRowIndex, int _iColumnIndex)
+{
+	int iBitmapCenterRow = m_bmMap.GetHeight() / 2;
+	int iBitmapCenterColumn = m_bmMap.GetWidth() / 2;
+
+
+}
+
+bool CPacmanBoard::FindPacmanStartPoints(POINT * _pPoints, int _iCount)
+{
+	_pPoints[0].x = 1;
+	_pPoints[0].y = 1;
+
+	if(_iCount > 1)
+	{
+		_pPoints[0].x = GetWidth() - 2;
+		_pPoints[0].y = GetHeight() - 2;
+	}
+	
 	return true;
 }

@@ -32,8 +32,8 @@ bool CScreenManager::Init()
 	assert(m_vScreens.empty());
 
 	//m_vScreens.push_back(new CMainScreen());
-	m_vScreens.push_back(new CTestScreen2D());
-	//m_vScreens.push_back(new CPacmanScreen());
+	//m_vScreens.push_back(new CTestScreen2D());
+	m_vScreens.push_back(new CPacmanScreen());
 
 /*
 	m_vScreens.push_back(new CTestScreen());

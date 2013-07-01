@@ -21,4 +21,6 @@ public:
 	bool Render(int iFrameIndex, const SFloatPoint & _pos);
 
 	int GetFrameCount() const;
+	bool Resize(float _fSize);
+	SFloatPoint GetSize() const;
 };

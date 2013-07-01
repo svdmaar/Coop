@@ -2,7 +2,6 @@
 
 #include "GraphicsManager.h"
 #include "Logger.h"
-#include "VertexTypes.h"
 
 #include <cassert>
 
@@ -34,14 +33,58 @@ CSprite::~CSprite()
 	assert(!m_bInited);
 }
 
-bool CSprite::_CreateBuffer(const SFloatPoint& _fpSize)
+void CSprite::_FillRectVertices(SFaceVertex * _pVertices)
 {
+	SFloatPoint fpHalfSize;
+	fpHalfSize.m_fX = 0.5f * m_fpSize.m_fX;
+	fpHalfSize.m_fY = 0.5f * m_fpSize.m_fY;
+
+	// Upper right triangle.
+	// Upper left.
+	_pVertices[0].x = -fpHalfSize.m_fX;
+	_pVertices[0].y = fpHalfSize.m_fY;
+	_pVertices[0].z = 0.0f;
+	_pVertices[0].tu = 0.0f;
+	_pVertices[0].tv = 0.0f;
+
+	// Upper right.
+	_pVertices[1].x = fpHalfSize.m_fX;
+	_pVertices[1].y = fpHalfSize.m_fY;
+	_pVertices[1].z = 0.0f;
+	_pVertices[1].tu = 1.0f;
+	_pVertices[1].tv = 0.0f;
+
+	// Lower right.
+	_pVertices[2].x = fpHalfSize.m_fX;
+	_pVertices[2].y = -fpHalfSize.m_fX;
+	_pVertices[2].z = 0.0f;
+	_pVertices[2].tu = 1.0f;
+	_pVertices[2].tv = 1.0f;
+
+	// Lower left triangle.
+	// Upper left.
+	_pVertices[3] = _pVertices[0];
+
+	// Lower left.
+	_pVertices[4].x = -fpHalfSize.m_fX;
+	_pVertices[4].y = -fpHalfSize.m_fX;
+	_pVertices[4].z = 0.0f;
+	_pVertices[4].tu = 0.0f;
+	_pVertices[4].tv = 1.0f;
+
+	// Lower right.
+	_pVertices[5] = _pVertices[2];
+}
+
+bool CSprite::_CreateBuffer()
+{
+	const int iVertexCount = 6;
+	const UINT bufferSize = sizeof(SFaceVertex) * iVertexCount;
 	HRESULT hr;
 
 	CGraphicsManager *pGraphicsManager = CGraphicsManager::GetInstance();
 	IDirect3DDevice9 *pDevice = pGraphicsManager->GetDevice();
-
-	UINT bufferSize = sizeof(SFaceVertex) * 6;
+	
 	hr = pDevice->CreateVertexBuffer(bufferSize, 0, SFaceVertex::_fvf, D3DPOOL_DEFAULT, &m_pVertexBuffer, NULL);
 	if(FAILED(hr))
 	{
@@ -57,45 +100,7 @@ bool CSprite::_CreateBuffer(const SFloatPoint& _fpSize)
 		return false;
 	}
 
-	SFloatPoint fpHalfSize;
-	fpHalfSize.m_fX = 0.5f * _fpSize.m_fX;
-	fpHalfSize.m_fY = 0.5f * _fpSize.m_fY;
-
-	// Upper right triangle.
-	// Upper left.
-	pVertices[0].x = -fpHalfSize.m_fX;
-	pVertices[0].y = fpHalfSize.m_fY;
-	pVertices[0].z = 0.0f;
-	pVertices[0].tu = 0.0f;
-	pVertices[0].tv = 0.0f;
-
-	// Upper right.
-	pVertices[1].x = fpHalfSize.m_fX;
-	pVertices[1].y = fpHalfSize.m_fY;
-	pVertices[1].z = 0.0f;
-	pVertices[1].tu = 1.0f;
-	pVertices[1].tv = 0.0f;
-
-	// Lower right.
-	pVertices[2].x = fpHalfSize.m_fX;
-	pVertices[2].y = -fpHalfSize.m_fX;
-	pVertices[2].z = 0.0f;
-	pVertices[2].tu = 1.0f;
-	pVertices[2].tv = 1.0f;
-
-	// Lower left triangle.
-	// Upper left.
-	pVertices[3] = pVertices[0];
-
-	// Lower left.
-	pVertices[4].x = -fpHalfSize.m_fX;
-	pVertices[4].y = -fpHalfSize.m_fX;
-	pVertices[4].z = 0.0f;
-	pVertices[4].tu = 0.0f;
-	pVertices[4].tv = 1.0f;
-
-	// Lower right.
-	pVertices[5] = pVertices[2];
+	_FillRectVertices(pVertices);
 
 	hr = m_pVertexBuffer->Unlock();
 	if(FAILED(hr))
@@ -186,11 +191,10 @@ bool CSprite::_CreateTexture(const CBitmap& _bitmap)
 
 bool CSprite::_CreateBufferAndTexture(const CBitmap& _bitmap)
 {
-	SFloatPoint fpSize;
-	fpSize.m_fX = _bitmap.GetWidth() / (float)g_iPixelsPerUnit;
-	fpSize.m_fY = _bitmap.GetHeight() / (float)g_iPixelsPerUnit;
+	m_fpSize.m_fX = _bitmap.GetWidth() / (float)g_iPixelsPerUnit;
+	m_fpSize.m_fY = _bitmap.GetHeight() / (float)g_iPixelsPerUnit;
 
-	if(!_CreateBuffer(fpSize))
+	if(!_CreateBuffer())
 	{
 		return false;
 	}
@@ -322,4 +326,38 @@ bool CSprite::CleanUp()
 	m_bInited = false;
 
 	return true;
+}
+
+bool CSprite::Resize(float _fSize)
+{
+	const int iVertexCount = 6;
+	const UINT bufferSize = sizeof(SFaceVertex) * iVertexCount;
+	HRESULT hr;
+
+	SFaceVertex *pVertices = NULL;
+	hr = m_pVertexBuffer->Lock(0, bufferSize, (void**)&pVertices, 0);
+	if(FAILED(hr))
+	{
+		LogErrorHr("Failed to lock image rectangle vertex buffer for resize", hr);
+		return false;
+	}
+
+	m_fpSize.m_fX = _fSize;
+	m_fpSize.m_fY = _fSize;
+
+	_FillRectVertices(pVertices);
+
+	hr = m_pVertexBuffer->Unlock();
+	if(FAILED(hr))
+	{
+		LogErrorHr("Failed to unlock image rectangle vertex buffer for resize", hr);
+		return false;
+	}
+
+	return true;
+}
+
+SFloatPoint CSprite::GetSize() const
+{
+	return m_fpSize;
 }

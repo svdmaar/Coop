@@ -3,18 +3,14 @@
 #include "Screen.h"
 #include "FloatPoint.h"
 #include "Objects2D.h"
+#include "PacmanGameState.h"
 
 const int g_iPacmanBoardWidth = 30;
 const int g_iPacmanBoardHeight = 20;
 
 class CPacmanScreen : public CScreen
 {
-	// Todo: CDataMap<bool> instead.
-	bool m_bDots[g_iPacmanBoardWidth * g_iPacmanBoardHeight];
-	SFloatPoint m_pPlayerPos;
-	CImageObject m_objDot;
-
-	bool _RenderBoard();
+	CPacmanGameState m_gameState;
 
 public:
 	CPacmanScreen();

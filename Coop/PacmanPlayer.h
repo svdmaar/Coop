@@ -27,4 +27,6 @@ public:
 
 	bool Update();
 	bool Render();
+
+	bool ResizeSprites(float _fSize);
 };

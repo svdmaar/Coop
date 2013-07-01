@@ -106,3 +106,23 @@ bool CAnimatedSprite::Init(const CBitmap & _bitmap)
 
 	return false;
 }
+
+bool CAnimatedSprite::Resize(float _fSize)
+{
+	vector<CSprite *>::iterator i;
+	for(i = m_vFrames.begin(); i != m_vFrames.end(); i++)
+	{
+		CSprite * pSprite = *i;
+		if(!pSprite->Resize(_fSize))
+		{
+			return false;
+		}
+	}
+
+	return true;
+}
+
+SFloatPoint CAnimatedSprite::GetSize() const
+{
+	return m_vFrames[0]->GetSize();
+}

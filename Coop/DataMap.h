@@ -61,12 +61,12 @@ public:
 		m_iHeight = 0;
 	}
 	
-	int GetWidth()
+	int GetWidth() const 
 	{
 		return m_iWidth;
 	}
 
-	int GetHeight()
+	int GetHeight() const
 	{
 		return m_iHeight;
 	}
