@@ -24,7 +24,6 @@ bool CPacmanGameState::Init()
 		return false;
 	}
 
-	//float fNewSpiteSize = 100.0f / (float)m_board.GetWidth();
 	float fScreenWidth = CGui::GetScreenRect().m_fRight - CGui::GetScreenRect().m_fLeft;
 	float fNewSpiteSize = fScreenWidth / (float)m_board.GetWidth();
 	if(!m_board.ResizeSprites(fNewSpiteSize))
@@ -50,6 +49,15 @@ bool CPacmanGameState::Init()
 		return false;
 	}
 
+	if(!m_player.SetSquare(startPos[0]))
+	{
+		return false;
+	}
+
+	if(!m_board.RemoveDot(startPos[0]))
+	{
+		return false;
+	}
 
 	m_bInited = true;
 
@@ -83,6 +91,17 @@ bool CPacmanGameState::Update()
 	}
 
 	if(!m_player.Update())
+	{
+		return false;
+	}
+
+	POINT pPos;
+	if(!m_player.GetSquare(pPos))
+	{
+		return false;
+	}
+
+	if(!m_board.RemoveDot(pPos))
 	{
 		return false;
 	}

@@ -298,16 +298,23 @@ void CPacmanBoard::_AddSpotToVector(int _iRowIndex, int _iColumnIndex)
 
 }
 
-bool CPacmanBoard::FindPacmanStartPoints(POINT * _pPoints, int _iCount)
+bool CPacmanBoard::FindPacmanStartPoints(POINT * _pPoints, int _iCount) const
 {
 	_pPoints[0].x = 1;
 	_pPoints[0].y = 1;
 
 	if(_iCount > 1)
 	{
-		_pPoints[0].x = GetWidth() - 2;
-		_pPoints[0].y = GetHeight() - 2;
+		_pPoints[1].x = GetWidth() - 2;
+		_pPoints[1].y = GetHeight() - 2;
 	}
 	
+	return true;
+}
+
+bool CPacmanBoard::RemoveDot(const POINT & _pPos)
+{
+	m_squares.GetValueRef(_pPos.y, _pPos.x).m_bDotRemaining = false;
+
 	return true;
 }

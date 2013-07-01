@@ -46,5 +46,6 @@ public:
 	int GetHeight() const;
 
 	bool ResizeSprites(float _fSize);
-	bool FindPacmanStartPoints(POINT * _pPoints, int _iCount);
+	bool FindPacmanStartPoints(POINT * _pPoints, int _iCount) const;
+	bool RemoveDot(const POINT & _pPos);
 };

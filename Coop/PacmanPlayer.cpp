@@ -1,5 +1,7 @@
 #include "PacmanPlayer.h"
+
 #include "FrameTimer.h"
+#include "Gui.h"
 
 #include <assert.h>
 
@@ -211,6 +213,35 @@ bool CPacmanPlayer::ResizeSprites(float _fSize)
 	{
 		return false;
 	}
+
+	return true;
+}
+
+bool CPacmanPlayer::SetSquare(const POINT & _pPos)
+{
+	float fSpriteSize = m_asBottom.GetSize().m_fX;
+	float fColumn = (float)_pPos.x;
+	float fRow = (float)_pPos.y;
+	float fScreenLeft = CGui::GetScreenRect().m_fLeft;
+	float fScreenTop = CGui::GetScreenRect().m_fTop;
+
+	m_pos.m_fX = fScreenLeft + 0.5f * fSpriteSize + fColumn * fSpriteSize;
+	m_pos.m_fY = fScreenTop - 0.5f * fSpriteSize - fRow * fSpriteSize;
+
+	return true;
+}
+
+bool CPacmanPlayer::GetSquare(POINT & _pPos)
+{
+	float fSpriteSize = m_asBottom.GetSize().m_fX;
+	float fScreenLeft = CGui::GetScreenRect().m_fLeft;
+	float fScreenTop = CGui::GetScreenRect().m_fTop;
+
+	float fColumn = (m_pos.m_fX - fScreenLeft - 0.5f * fSpriteSize) / fSpriteSize;
+	float fRow = (fScreenTop - m_pos.m_fY - 0.5f * fSpriteSize) / fSpriteSize;
+
+	_pPos.x = (int)(fColumn + 0.5f);
+	_pPos.y = (int)(fRow + 0.5f);
 
 	return true;
 }

@@ -29,4 +29,7 @@ public:
 	bool Render();
 
 	bool ResizeSprites(float _fSize);
+	
+	bool SetSquare(const POINT & _pPos);
+	bool GetSquare(POINT & _pPos);
 };

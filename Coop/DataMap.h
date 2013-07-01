@@ -7,7 +7,7 @@ class CDataMap
 	int m_iHeight;
 	T * m_pData;
 
-	int _CalcIndex(int _iRowIndex, int _iColumnIndex)
+	int _CalcIndex(int _iRowIndex, int _iColumnIndex) const
 	{
 		return _iColumnIndex + _iRowIndex * m_iWidth;
 	}
@@ -71,7 +71,13 @@ public:
 		return m_iHeight;
 	}
 
-	T GetValue(int _iRowIndex, int _iColumnIndex)
+	T GetValue(int _iRowIndex, int _iColumnIndex) const
+	{
+		int iIndex = _CalcIndex(_iRowIndex, _iColumnIndex);
+		return m_pData[iIndex];
+	}
+
+	T & GetValueRef(int _iRowIndex, int _iColumnIndex)
 	{
 		int iIndex = _CalcIndex(_iRowIndex, _iColumnIndex);
 		return m_pData[iIndex];
