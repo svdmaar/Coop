@@ -4,6 +4,9 @@
 #include "Gui.h"
 
 #include <assert.h>
+#include <sstream>
+
+using namespace std;
 
 CPacmanGameState::CPacmanGameState()
 {
@@ -90,18 +93,7 @@ bool CPacmanGameState::Update()
 		return false;
 	}
 
-	if(!m_player.Update())
-	{
-		return false;
-	}
-
-	POINT pPos;
-	if(!m_player.GetSquare(pPos))
-	{
-		return false;
-	}
-
-	if(!m_board.RemoveDot(pPos))
+	if(!_UpdatePlayers())
 	{
 		return false;
 	}
@@ -119,6 +111,62 @@ bool CPacmanGameState::Render()
 	if(!m_player.Render())
 	{
 		return false;
+	}
+
+	return true;
+}
+
+bool CPacmanGameState::_UpdatePlayers()
+{
+	if(!m_player.Update())
+	{
+		return false;
+	}
+
+	POINT pPos;
+	if(!m_player.GetSquare(pPos))
+	{
+		return false;
+	}
+
+	if(!m_board.RemoveDot(pPos))
+	{
+		return false;
+	}
+
+	if(m_player.AboutToPassSquareCenter())
+	{
+		if(!m_player.UpdateDirection())
+		{
+			return false;
+		}
+
+		SFloatPoint fpPlayerPos = m_player.GetPosition();
+
+		stringstream ss;
+		ss << fpPlayerPos.m_fX << ", " << fpPlayerPos.m_fY << endl;
+		CGui::SetDebugLine(ss.str());
+
+		POINT pTargetSquare;
+		if(!m_player.GetTargetSquare(pTargetSquare))
+		{
+			return false;
+		}
+
+		if(!m_board.HasWall(pTargetSquare))
+		{
+			if(!m_player.DoMove())
+			{
+				return false;
+			}
+		}
+	}
+	else
+	{
+		if(!m_player.DoMove())
+		{
+			return false;
+		}
 	}
 
 	return true;

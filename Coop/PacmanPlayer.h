@@ -11,12 +11,17 @@ class CPacmanPlayer
 	CAnimatedSprite m_asTop;
 	CAnimatedSprite m_asBottom;
 	SFloatPoint m_pos;
+	SFloatPoint m_nextPos;
 	const CInputDevice * m_pInputDevice;
 	E_DPADDIRECTION m_eDirection;
+	E_DPADDIRECTION m_eRequestedDirection;
 	bool m_bInited;
 
 	void _AddDirection();
 	bool _RenderCorrectDirection();
+	POINT _GetSquare(const SFloatPoint & _pfPos);
+	SFloatPoint _GetPos(const POINT & _pPos);
+	SFloatPoint _GetDirection();
 
 public:
 	CPacmanPlayer();
@@ -32,4 +37,14 @@ public:
 	
 	bool SetSquare(const POINT & _pPos);
 	bool GetSquare(POINT & _pPos);
+	bool GetTargetSquare(POINT & _pPos);
+
+	bool DoMove();
+	bool StayOnCurrentSquare();
+	bool AboutToPassSquareCenter();
+
+	E_DPADDIRECTION GetRequestedDir() const;
+	bool UpdateDirection();
+
+	SFloatPoint GetPosition() const;
 };

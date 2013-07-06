@@ -12,6 +12,8 @@ class CPacmanScreen : public CScreen
 {
 	CPacmanGameState m_gameState;
 
+	bool _RenderDebugLine();
+
 public:
 	CPacmanScreen();
 	virtual ~CPacmanScreen();

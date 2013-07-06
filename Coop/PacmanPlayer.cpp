@@ -24,6 +24,7 @@ bool CPacmanPlayer::Init(const CInputDevice * _pInputDevice)
 	assert(!m_bInited);
 
 	m_pos.m_fX = m_pos.m_fY = 0.0f;
+	m_nextPos = m_pos;
 
 	RECT rSpriteRect;
 	rSpriteRect.left = 0;
@@ -98,7 +99,7 @@ bool CPacmanPlayer::Update()
 
 	if(bInput)
 	{
-		m_eDirection = eDir;
+		m_eRequestedDirection = eDir;
 	}
 
 	_AddDirection();
@@ -175,19 +176,21 @@ void CPacmanPlayer::_AddDirection()
 	CFrameTimer * pFrameTimer = CFrameTimer::GetInstance();
 	float fOffset = fAddedFactor * (float)pFrameTimer->GetDeltaT();
 
+	m_nextPos = m_pos;
+
 	switch(m_eDirection)
 	{
 	case DIR_LEFT:
-		m_pos.m_fX -= fOffset;
+		m_nextPos.m_fX -= fOffset;
 		break;
 	case DIR_RIGHT:
-		m_pos.m_fX += fOffset;
+		m_nextPos.m_fX += fOffset;
 		break;
 	case DIR_TOP:
-		m_pos.m_fY += fOffset;
+		m_nextPos.m_fY += fOffset;
 		break;
 	case DIR_BOTTOM:
-		m_pos.m_fY -= fOffset;
+		m_nextPos.m_fY -= fOffset;
 		break;
 	}
 }
@@ -219,19 +222,19 @@ bool CPacmanPlayer::ResizeSprites(float _fSize)
 
 bool CPacmanPlayer::SetSquare(const POINT & _pPos)
 {
-	float fSpriteSize = m_asBottom.GetSize().m_fX;
-	float fColumn = (float)_pPos.x;
-	float fRow = (float)_pPos.y;
-	float fScreenLeft = CGui::GetScreenRect().m_fLeft;
-	float fScreenTop = CGui::GetScreenRect().m_fTop;
-
-	m_pos.m_fX = fScreenLeft + 0.5f * fSpriteSize + fColumn * fSpriteSize;
-	m_pos.m_fY = fScreenTop - 0.5f * fSpriteSize - fRow * fSpriteSize;
+	m_pos = _GetPos(_pPos);
 
 	return true;
 }
 
 bool CPacmanPlayer::GetSquare(POINT & _pPos)
+{
+	_pPos = _GetSquare(m_pos);
+
+	return true;
+}
+
+POINT CPacmanPlayer::_GetSquare(const SFloatPoint & _pfPos)
 {
 	float fSpriteSize = m_asBottom.GetSize().m_fX;
 	float fScreenLeft = CGui::GetScreenRect().m_fLeft;
@@ -240,8 +243,149 @@ bool CPacmanPlayer::GetSquare(POINT & _pPos)
 	float fColumn = (m_pos.m_fX - fScreenLeft - 0.5f * fSpriteSize) / fSpriteSize;
 	float fRow = (fScreenTop - m_pos.m_fY - 0.5f * fSpriteSize) / fSpriteSize;
 
-	_pPos.x = (int)(fColumn + 0.5f);
-	_pPos.y = (int)(fRow + 0.5f);
+	POINT pPos;
+	pPos.x = (int)(fColumn + 0.5f);
+	pPos.y = (int)(fRow + 0.5f);
+
+	return pPos;
+}
+
+SFloatPoint CPacmanPlayer::_GetPos(const POINT & _pPos)
+{
+	float fSpriteSize = m_asBottom.GetSize().m_fX;
+	float fColumn = (float)_pPos.x;
+	float fRow = (float)_pPos.y;
+	float fScreenLeft = CGui::GetScreenRect().m_fLeft;
+	float fScreenTop = CGui::GetScreenRect().m_fTop;
+
+	SFloatPoint fpPos;
+	fpPos.m_fX = fScreenLeft + 0.5f * fSpriteSize + fColumn * fSpriteSize;
+	fpPos.m_fY = fScreenTop - 0.5f * fSpriteSize - fRow * fSpriteSize;
+
+	return fpPos;
+}
+
+bool CPacmanPlayer::GetTargetSquare(POINT & _pPos)
+{
+	if(!GetSquare(_pPos))
+	{
+		return false;
+	}
+
+	switch(m_eRequestedDirection)
+	{
+	case DIR_LEFT:
+		_pPos.x--;
+		break;
+	case DIR_RIGHT:
+		_pPos.x++;
+		break;
+	case DIR_TOP:
+		_pPos.y++;
+		break;
+	case DIR_BOTTOM:
+		_pPos.y--;
+		break;
+	}
 
 	return true;
 }
+
+bool CPacmanPlayer::DoMove()
+{
+	m_pos = m_nextPos;
+
+	return true;
+}
+
+bool CPacmanPlayer::StayOnCurrentSquare()
+{
+	POINT pPos;
+
+	pPos = _GetSquare(m_pos);
+	m_pos = _GetPos(pPos);
+
+	return true;
+}
+
+bool CPacmanPlayer::AboutToPassSquareCenter()
+{
+	SFloatPoint fpCurrOffset;
+	SFloatPoint fpNextOffset;
+
+	fpCurrOffset = m_pos;
+	fpNextOffset = m_nextPos;
+
+	if(fpCurrOffset.m_fX < 0.0f)
+	{
+		fpCurrOffset.m_fX -= floorf(fpCurrOffset.m_fX);
+	}
+
+	if(fpCurrOffset.m_fY < 0.0f)
+	{
+		fpCurrOffset.m_fY -= floorf(fpCurrOffset.m_fY);
+	}
+
+	if(fpNextOffset.m_fX < 0.0f)
+	{
+		fpNextOffset.m_fX -= floorf(fpNextOffset.m_fX);
+	}
+
+	if(fpNextOffset.m_fY < 0.0f)
+	{
+		fpNextOffset.m_fY -= floorf(fpNextOffset.m_fY);
+	}
+
+	fpCurrOffset.m_fX = fmodf(fpCurrOffset.m_fX, 1.0f);
+	fpCurrOffset.m_fY = fmodf(fpCurrOffset.m_fY, 1.0f);
+	fpNextOffset.m_fX = fmodf(fpNextOffset.m_fX, 1.0f);
+	fpNextOffset.m_fY = fmodf(fpNextOffset.m_fY, 1.0f);
+
+	switch(m_eDirection)
+	{
+	case DIR_LEFT:
+		if((fpCurrOffset.m_fX >= 0.5f) && (fpNextOffset.m_fX < 0.5f))
+		{
+			return true;
+		}
+		break;
+	case DIR_RIGHT:
+		if((fpCurrOffset.m_fX < 0.5f) && (fpNextOffset.m_fX >= 0.5f))
+		{
+			return true;
+		}
+		break;
+	case DIR_TOP:
+		if((fpCurrOffset.m_fY < 0.5f) && (fpNextOffset.m_fY >= 0.5f))
+		{
+			return true;
+		}
+		break;
+	case DIR_BOTTOM:
+		if((fpCurrOffset.m_fY < 0.5f) && (fpNextOffset.m_fY >= 0.5f))
+		{
+			return true;
+		}
+		break;
+	}
+
+	return false;
+}
+
+E_DPADDIRECTION CPacmanPlayer::GetRequestedDir() const
+{
+	return m_eRequestedDirection;
+}
+
+bool CPacmanPlayer::UpdateDirection()
+{
+	m_eDirection = m_eRequestedDirection;
+
+	return true;
+}
+
+SFloatPoint CPacmanPlayer::GetPosition() const
+{
+	return m_pos;
+}
+

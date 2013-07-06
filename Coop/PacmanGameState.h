@@ -9,6 +9,8 @@ class CPacmanGameState
 	CPacmanPlayer m_player;
 	bool m_bInited;
 
+	bool _UpdatePlayers();
+
 public:
 	CPacmanGameState();
 	~CPacmanGameState();

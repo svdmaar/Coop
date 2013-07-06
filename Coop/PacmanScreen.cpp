@@ -89,10 +89,28 @@ bool CPacmanScreen::Render()
 		return false;
 	}
 
+	if(!_RenderDebugLine())
+	{
+		return false;
+	}
+
 	if(!pGraphicsManager->EndScene())
 	{
 		return false;
 	}
 
 	return true;
+}
+
+bool CPacmanScreen::_RenderDebugLine()
+{
+	string sDebugLine = CGui::GetDebugLine();
+
+	CGraphicsManager * pGraphicsManager = CGraphicsManager::GetInstance();
+	const CFont * pArial = pGraphicsManager->GetArial();
+
+	SFloatRect rScreen = CGui::GetScreenRect();
+	pArial->RenderCentered(sDebugLine, 0.0f, rScreen.m_fBottom + 1.0f, 2.0f);
+
+	return true;	
 }

@@ -318,3 +318,10 @@ bool CPacmanBoard::RemoveDot(const POINT & _pPos)
 
 	return true;
 }
+
+bool CPacmanBoard::HasWall(const POINT & _pPos) const
+{
+	SPacmanSquare square = m_squares.GetValue(_pPos.y, _pPos.x);
+
+	return square.m_bWall;
+}

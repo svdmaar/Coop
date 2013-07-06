@@ -253,3 +253,17 @@ bool CGui::_FloatPositive(float _fValue)
 {
 	return _fValue > 0.0f;
 }
+
+bool CGui::SetDebugLine(const std::string & _sText)
+{
+	m_sDebugLine = _sText;
+
+	return true;
+}
+
+string CGui::GetDebugLine()
+{
+	return m_sDebugLine;
+}
+
+string CGui::m_sDebugLine = "";

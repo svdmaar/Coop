@@ -11,6 +11,8 @@ class CGui : IGuiEventListener
 	std::vector<CGuiEvent> m_vEvents;
 	CGuiElement *m_pSelected;
 
+	static std::string m_sDebugLine;
+
 	bool _GetDeviceInput(const CInputDevice *_pDevice, float& _fX, float& _fY);
 	CGuiElement *_FindNextSelectableElement(float _fXDir, float _fYDir);
 	bool _FloatPositive(float _fValue);
@@ -31,4 +33,6 @@ public:
 	bool ProcessInput();
 
 	static SFloatRect GetScreenRect();
+	static bool SetDebugLine(const std::string & _sText);
+	static std::string GetDebugLine();
 };

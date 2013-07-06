@@ -48,4 +48,5 @@ public:
 	bool ResizeSprites(float _fSize);
 	bool FindPacmanStartPoints(POINT * _pPoints, int _iCount) const;
 	bool RemoveDot(const POINT & _pPos);
+	bool HasWall(const POINT & _pPos) const;
 };
