@@ -151,6 +151,12 @@
     <ClCompile Include="CreatePacmanSprites.cpp">
       <Filter>Sources\Game - Pacman</Filter>
     </ClCompile>
+    <ClCompile Include="3dsFileRenderer.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
+    <ClCompile Include="3dsFile2.cpp">
+      <Filter>Sources\Graphics</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Application.h">
@@ -311,6 +317,12 @@
     </ClInclude>
     <ClInclude Include="PacmanPlayer.h">
       <Filter>Headers\Game - Pacman</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsFileRenderer.h">
+      <Filter>Headers\Graphics</Filter>
+    </ClInclude>
+    <ClInclude Include="3dsFile2.h">
+      <Filter>Headers\Graphics</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

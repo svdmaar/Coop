@@ -26,7 +26,8 @@ CTestScreen::~CTestScreen()
 
 bool CTestScreen::Init()
 {
-	if(!m_box.Load("mesh/sphere2_bin.esh"))
+	//if(!m_box.Load("mesh/sphere2_bin.esh"))
+	if(!m_box.Init())
 	{
 		return false;
 	}

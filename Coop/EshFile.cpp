@@ -481,7 +481,6 @@ bool CEshFile::CreateVertexBuffer()
 bool CEshFile::Render()
 {
 	HRESULT hr;
-
 	IDirect3DDevice9 * pDevice = CGraphicsManager::GetInstance()->GetDevice();
 
 	hr = pDevice->SetStreamSource(0, m_pVertexBuffer, 0, sizeof(SNormalVertex));

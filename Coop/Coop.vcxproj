@@ -92,6 +92,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="3dsFile2.cpp" />
+    <ClCompile Include="3dsFileRenderer.cpp" />
     <ClCompile Include="AnimatedSprite.cpp" />
     <ClCompile Include="Application.cpp" />
     <ClCompile Include="AppState.cpp" />
@@ -144,6 +146,8 @@
     <ClCompile Include="TestScreen.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="3dsFile2.h" />
+    <ClInclude Include="3dsFileRenderer.h" />
     <ClInclude Include="AnimatedSprite.h" />
     <ClInclude Include="Application.h" />
     <ClInclude Include="AppState.h" />

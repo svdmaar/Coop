@@ -4,10 +4,12 @@
 #include "EshFile.h"
 #include "AudioFile.h"
 #include "AudioManager.h"
+#include "3dsFileRenderer.h"
 
 class CTestScreen : public CScreen
 {
-	CEshFile m_box;
+	//CEshFile m_box;
+	C3dsFileRenderer m_box;
 	CAudioFile m_sounds[12];
 
 	static CTestScreen *m_pInstance;
