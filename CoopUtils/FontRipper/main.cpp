@@ -5,8 +5,12 @@
 
 #include <iostream>
 #include <string>
+#include <vector>
 
 using namespace std;
+
+const int g_iMinChar = 33;
+const int g_iMaxChar = 127; // exclusive
 
 void ExportDcToBitmap(HDC hDc, string fileName)
 {
@@ -28,12 +32,47 @@ void ExportDcToBitmap(HDC hDc, string fileName)
 	outBmp.Save(fileName);
 }
 
+string ConvertWCharToString(const WCHAR * pData)
+{
+	//WideCharToMultiByte(
+
+	return "";
+}
+
+//int CALLBACK FontNameEnumCallback(const ENUMLOGFONT *lpelf, const NEWTEXTMETRIC *lpntm, DWORD FontType, LPARAM lParam)
+int CALLBACK FontNameEnumCallback(CONST LOGFONTW * lpelf, CONST TEXTMETRICW *, DWORD, LPARAM)
+{
+	/*
+	void * pParm = (void *)lParam;
+	vector<string> & vNamesString = *(vector<string> *)pParm;
+	*/
+
+	//cout << lpelf->elfFullName << endl;
+	wcout << lpelf->lfFaceName << endl;
+	
+
+	//vNamesString.push_back(string(lpelf->elfFullName));
+
+
+	return TRUE;
+}
+
+void ListFontNames(HDC hDc/*, vector<string> vFonts*/)
+{
+	EnumFontFamilies(hDc, NULL, FontNameEnumCallback, NULL);
+
+}
+
+void SelectArialBlack(HDC hDc)
+{
+	HFONT font = CreateFont(200, 0, 0, 0, 400, FALSE, FALSE, FALSE, ANSI_CHARSET, OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, L"Arial Black");
+	SelectObject(hDc, font);
+
+}
+
 int main()
 {
 	HDC hDcDesktop = GetDC(NULL);
-
-	cout << hDcDesktop << endl;
-	cout << GetDeviceCaps(hDcDesktop, HORZRES) << endl;
 
 	int iWidth = GetDeviceCaps(hDcDesktop, HORZRES);
 	int iHeight = GetDeviceCaps(hDcDesktop, VERTRES);
@@ -53,17 +92,20 @@ int main()
 
 	rText.left = 0;
 	rText.top = 0;
-	rText.right = rText.left + iWidth;
-	rText.bottom = rText.top + iHeight;
+	rText.right = rText.left + iWidth - rText.left;
+	rText.bottom = rText.top + iHeight - rText.top;
 
+	SelectArialBlack(hDcComp);
 	SelectObject(hDcComp, GetStockObject(WHITE_BRUSH));
 
 	FillRect(hDcComp, &rText, (HBRUSH)GetStockObject(WHITE_BRUSH));
 
-	int iOutput = DrawText(hDcComp, L"X", -1, &rText, DT_LEFT);
+	int iOutput = DrawText(hDcComp, L"Sander WW WA", -1, &rText, DT_LEFT | DT_TOP);
 	cout << iOutput << endl;
 
 	ExportDcToBitmap(hDcComp, "out_font_3.bmp");
+
+	//ListFontNames(hDcComp); 
 
 	return 0;
 }
