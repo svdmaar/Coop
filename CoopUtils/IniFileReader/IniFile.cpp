@@ -13,7 +13,7 @@ CIniFile::~CIniFile()
 {
 }
 
-std::string CIniFile::_TrimString(const std::string& _sText)
+string CIniFile::_TrimString(const string& _sText)
 {
 	int iFirstNonSpace = _sText.length();
 	int iLastNonSpace = _sText.length() - 1;
@@ -121,6 +121,19 @@ string CIniFile::GetValueString(const string& _sBlock, const string& _sKey) cons
 	}
 
 	return (*iLine).second;
+}
+
+int CIniFile::GetValueInt(const string& _sBlock, const string& _sKey) const
+{
+	string sValue = GetValueString(_sBlock, _sKey);
+
+	if(sValue == "")
+	{
+		return 0;
+	}
+
+	int iValue = atoi(sValue.c_str());
+	return iValue;
 }
 
 void CIniFile::PrintValues() const

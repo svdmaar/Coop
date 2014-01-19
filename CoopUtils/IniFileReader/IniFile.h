@@ -22,6 +22,7 @@ public:
 	bool Load(const std::string& _sFileName);
 
 	std::string GetValueString(const std::string& _sBlock, const std::string& _sKey) const;
+	int GetValueInt(const std::string& _sBlock, const std::string& _sKey) const;
 
 	void PrintValues() const;
 

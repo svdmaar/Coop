@@ -3,6 +3,14 @@ Microsoft Visual Studio Solution File, Format Version 11.00
 # Visual Studio 2010
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "FontRipper", "FontRipper\FontRipper.vcxproj", "{87CCF167-D3A2-4657-B95E-DAF376DF7DB1}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "win32wchar", "win32wchar\win32wchar.vcxproj", "{9D53263C-7D0A-452A-A5A9-F0175FE76CCE}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "IniFileReader", "IniFileReader\IniFileReader.vcxproj", "{8E871550-605C-40EA-9CB0-6573F1179C19}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateDlg", "CreateDlg\CreateDlg.vcxproj", "{469C4F11-68C6-4A16-9341-CE963EEFC775}"
+EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Direct9dDemos", "Direct9dDemos\Direct9dDemos.vcxproj", "{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -13,6 +21,22 @@ Global
 		{87CCF167-D3A2-4657-B95E-DAF376DF7DB1}.Debug|Win32.Build.0 = Debug|Win32
 		{87CCF167-D3A2-4657-B95E-DAF376DF7DB1}.Release|Win32.ActiveCfg = Release|Win32
 		{87CCF167-D3A2-4657-B95E-DAF376DF7DB1}.Release|Win32.Build.0 = Release|Win32
+		{9D53263C-7D0A-452A-A5A9-F0175FE76CCE}.Debug|Win32.ActiveCfg = Debug|Win32
+		{9D53263C-7D0A-452A-A5A9-F0175FE76CCE}.Debug|Win32.Build.0 = Debug|Win32
+		{9D53263C-7D0A-452A-A5A9-F0175FE76CCE}.Release|Win32.ActiveCfg = Release|Win32
+		{9D53263C-7D0A-452A-A5A9-F0175FE76CCE}.Release|Win32.Build.0 = Release|Win32
+		{8E871550-605C-40EA-9CB0-6573F1179C19}.Debug|Win32.ActiveCfg = Debug|Win32
+		{8E871550-605C-40EA-9CB0-6573F1179C19}.Debug|Win32.Build.0 = Debug|Win32
+		{8E871550-605C-40EA-9CB0-6573F1179C19}.Release|Win32.ActiveCfg = Release|Win32
+		{8E871550-605C-40EA-9CB0-6573F1179C19}.Release|Win32.Build.0 = Release|Win32
+		{469C4F11-68C6-4A16-9341-CE963EEFC775}.Debug|Win32.ActiveCfg = Debug|Win32
+		{469C4F11-68C6-4A16-9341-CE963EEFC775}.Debug|Win32.Build.0 = Debug|Win32
+		{469C4F11-68C6-4A16-9341-CE963EEFC775}.Release|Win32.ActiveCfg = Release|Win32
+		{469C4F11-68C6-4A16-9341-CE963EEFC775}.Release|Win32.Build.0 = Release|Win32
+		{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}.Debug|Win32.ActiveCfg = Debug|Win32
+		{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}.Debug|Win32.Build.0 = Debug|Win32
+		{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}.Release|Win32.ActiveCfg = Release|Win32
+		{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
