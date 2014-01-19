@@ -577,7 +577,7 @@ struct SCharPosition
 vector<SCharPosition> CalcCharPositions(const string & _sText)
 {
 	int nLength = _sText.length();
-	int iCurrentRow = 0;
+	int iCurrentRow = g_iInitialRowOffset;
 	int iCurrentColumn = 0;
 	vector<SCharPosition> vCharPos;
 
@@ -775,19 +775,12 @@ void GetHeighestLowestChar(int & _iHeighest, int & _iLowest)
 
 void CalcFontLineDistance()
 {
-	//SelectFontAndSize("Arial Black", 200);
-	//SelectObject(g_hDc, GetStockObject(BLACK_BRUSH));
-
 	RECT rText;
 	rText.top = rText.left = 0;
 	rText.right = 1920;
 	rText.bottom = 1200;
-	//DrawText(g_hDc, L"Test1\nTest2", 11, &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
 
 	CBitmap bmAll;
-	//ExportDcToBitmap(g_hDc, bmAll);
-
-	//bmAll.Save("multiline.bmp");
 
 	int iHeightest = 0, iLowest = 0;
 	GetHeighestLowestChar(iHeightest, iLowest);
@@ -807,8 +800,6 @@ void CalcFontLineDistance()
 	DrawText(g_hDc, wsText.c_str(), wsText.length(), &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
 
 	ExportDcToBitmap(g_hDc, bmAll);
-	bmAll.Save("single.bmp");
-	
 	CBitmap bmSub;
 	POINT pPos;
 	GetNonBlackData(bmAll, pPos, bmSub);
@@ -824,8 +815,6 @@ void CalcFontLineDistance()
 	DrawText(g_hDc, wsText.c_str(), wsText.length(), &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
 
 	ExportDcToBitmap(g_hDc, bmAll);
-	bmAll.Save("double.bmp");
-	
 	GetNonBlackData(bmAll, pPos, bmSub);
 
 	int iDoubleHeight = bmSub.GetHeight();
@@ -864,42 +853,6 @@ void GenerateFont(const string & _sFontName, int _iFontSize)
 	WriteToBmpIni(sBaseName);
 }
 
-void WriteWhiteOnBlack()
-{
-	SelectFontAndSize("Arial Black", 200);
-	SelectObject(g_hDc, GetStockObject(BLACK_BRUSH));
-
-	RECT rText;
-	ZeroMemory(&rText, sizeof(rText));
-
-	rText.left = rText.top = 0;
-	rText.right = rText.bottom = g_iTextRectSize;
-
-	RECT rWhite;
-	ZeroMemory(&rWhite, sizeof(rWhite));
-
-	rWhite.left = rWhite.top = 0;
-	rWhite.right = 1920;
-	rWhite.bottom = 1200;
-
-	SetTextColor(g_hDc, 0xffffffL);
-	SetBkColor(g_hDc, 0);
-
-	FillRect(g_hDc, &rWhite, (HBRUSH)GetStockObject(BLACK_BRUSH));
-	DrawText(g_hDc, L"W", -1, &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
-
-	CBitmap bmFull;
-	ExportDcToBitmap(g_hDc, bmFull);
-
-	bmFull.Save("bmfull_2.bmp");
-
-	CBitmap bmChar;
-	POINT pUpperLeft;
-	GetNonBlackData(bmFull, pUpperLeft, bmChar);
-
-	bmChar.Save("bmfull_2_W.bmp");
-}
-
 int main()
 {
 	HDC hDcDesktop = GetDC(NULL);
@@ -911,11 +864,11 @@ int main()
 	HBITMAP hBmp = CreateCompatibleBitmap(g_hDc, iWidth, iHeight);
 	SelectObject(g_hDc, hBmp);
 
-	//ReadFontFromBmpIni();
+	ReadFontFromBmpIni();
 
 
 
-	GenerateFont("Arial Black", 100);
+	//GenerateFont("Arial Black", 100);
 
 	/*
 	ReadFontFromBmpIni();
@@ -924,10 +877,8 @@ int main()
 	WriteToBmpIni("arial_black_200_5");
 	*/
 
-	/*
 	CBitmap bmText = DrawStringToBitmap("I love Fernanda\nA lot\nSo so much");
 	bmText.Save("fernanda.bmp");
-	*/
 
 /*
 	POINT pos;
