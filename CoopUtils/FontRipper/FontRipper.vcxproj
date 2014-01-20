@@ -77,13 +77,19 @@
     <ClCompile Include="..\..\Coop\Bitmap.cpp" />
     <ClCompile Include="..\IniFileReader\IniFile.cpp" />
     <ClCompile Include="BitmapUtils.cpp" />
+    <ClCompile Include="FontRipper.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="SingleSizeFont.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Coop\Bitmap.h" />
     <ClInclude Include="..\..\Coop\BitmapTypes.h" />
     <ClInclude Include="..\IniFileReader\IniFile.h" />
     <ClInclude Include="BitmapUtils.h" />
+    <ClInclude Include="CharDesc.h" />
+    <ClInclude Include="CharPosition.h" />
+    <ClInclude Include="FontRipper.h" />
+    <ClInclude Include="SingleSizeFont.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

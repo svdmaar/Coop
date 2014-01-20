@@ -5,6 +5,9 @@
 #include "BitmapUtils.h"
 #include "../IniFileReader/IniFile.h"
 #include "FontRipper.h"
+#include "CharDesc.h"
+#include "CharPosition.h"
+#include "SingleSizeFont.h"
 
 #include <iostream>
 #include <string>
@@ -16,14 +19,9 @@
 
 using namespace std;
 
-struct SCharDesc
-{
-	CBitmap m_bitmap;
-	POINT m_pUpperLeft;
-	int m_iBufferLeft;
-	int m_iBufferRight;
-	POINT m_pInBitmap;
-};
+const int g_iMinChar = 33;
+const int g_iMaxChar = 127; // exclusive
+const int g_nCharCount = g_iMaxChar - g_iMinChar;
 
 HDC g_hDc = (HDC)0;
 const int g_iTextRectSize = 512;
@@ -344,8 +342,8 @@ void FillCharDescs_BitmapUpperLeft()
 
 void FillCharDescs_LeftRight()
 {
-	// Assume 'A' has no left and right and
-	// left, right is independent of neighboring chars.
+	// Assume 'A' has no left and right, and
+	// left and right is independent of neighboring chars.
 	for(int iChar = g_iMinChar; iChar < g_iMaxChar; iChar++)
 	{
 		cout << "For left and right: " << iChar << "..." << endl;
@@ -567,12 +565,6 @@ void CalcAverageHeightWidth()
 	g_iAverageWidth = (iTotalWidth - 1) / g_nCharCount + 1;
 	g_iAverageHeight = (iTotalHeight - 1) / g_nCharCount + 1;
 }
-
-struct SCharPosition
-{
-	POINT m_pPos;
-	int m_iIndex;	// 0 up to g_nCharCount (exclusive)
-};
 
 vector<SCharPosition> CalcCharPositions(const string & _sText)
 {
@@ -864,11 +856,21 @@ int main()
 	HBITMAP hBmp = CreateCompatibleBitmap(g_hDc, iWidth, iHeight);
 	SelectObject(g_hDc, hBmp);
 
-	ReadFontFromBmpIni();
+	//ReadFontFromBmpIni();
 
 
 
 	//GenerateFont("Arial Black", 100);
+
+	CSingleSizeFont font;
+	if(!font.Load("out_chars/arial_black_100"))
+		cout << "Load error" << endl;
+
+	CBitmap bmText;
+	if(!font.DrawStringToBitmap("I love Fernanda", bmText))
+		cout << "Draw error" << endl;
+
+	bmText.Save("fer.bmp");
 
 	/*
 	ReadFontFromBmpIni();
@@ -877,8 +879,10 @@ int main()
 	WriteToBmpIni("arial_black_200_5");
 	*/
 
+	/*
 	CBitmap bmText = DrawStringToBitmap("I love Fernanda\nA lot\nSo so much");
 	bmText.Save("fernanda.bmp");
+	*/
 
 /*
 	POINT pos;

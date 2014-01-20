@@ -23,6 +23,12 @@
     <ClCompile Include="..\IniFileReader\IniFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="SingleSizeFont.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="FontRipper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Coop\Bitmap.h">
@@ -35,6 +41,18 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="..\IniFileReader\IniFile.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="SingleSizeFont.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharDesc.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CharPosition.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRipper.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

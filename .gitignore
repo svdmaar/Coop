@@ -17,3 +17,7 @@ bin/final/Coop.ilk
 bin/final/Coop.pdb
 bin/final/Debug/log/*
 bin/*
+*.tlog
+*.log
+*.user
+CoopUtils/*/Debug/*

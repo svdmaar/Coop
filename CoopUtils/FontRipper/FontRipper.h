@@ -4,6 +4,8 @@
 #include "BitmapUtils.h"
 #include "../IniFileReader/IniFile.h"
 
+#include "SingleSizeFont.h"
+
 #include <iostream>
 #include <string>
 #include <vector>
@@ -14,26 +16,25 @@
 
 using namespace std;
 
-const int g_iMinChar = 33;
-const int g_iMaxChar = 127; // exclusive
-const int g_nCharCount = g_iMaxChar - g_iMinChar;
-
-class CFontRipper
+class CFontRipper : public CSingleSizeFont
 {
-	struct SCharDesc
-	{
-		CBitmap m_bitmap;
-		POINT m_pUpperLeft;
-		int m_iBufferLeft;
-		int m_iBufferRight;
-		POINT m_pInBitmap;
-	};
+	HDC m_hDc;
+	ofstream m_ofOut;
 
+	void _ExportDcToBitmap(CBitmap & _bmOut);
+	void _SelectFontAndSize(const std::string & _sFontName, int _iSize);
+	void _CreateStringBitmap(const std::string & _sText, CBitmap & _bmOut, POINT & _pos);
+	int _CalcD(char _c1, char _c2);
+	void _CalcSpaceSize();
+	void _FillCharDescs_BitmapUpperLeft();
 
+	// TODO: Get nonblack data.
+
+	static std::wstring _ConvertStringToWide(const std::string & _sText);
 
 public:
 	CFontRipper();
 
-
+	bool RipFont(const std::string & _sFont, int _iSize);
 
 };
