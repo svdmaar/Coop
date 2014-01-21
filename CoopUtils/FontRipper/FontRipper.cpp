@@ -180,6 +180,22 @@ void CFontRipper::_FillCharDescs_BitmapUpperLeft()
 	}
 }
 
+void CFontRipper::_FillCharDescs_LeftRight()
+{
+	// Assume 'A' has no left and right, and
+	// left and right is independent of neighboring chars.
+	for(int iChar = g_iMinChar; iChar < g_iMaxChar; iChar++)
+	{
+		cout << "For left and right: " << iChar << "..." << endl;
+
+      SCharDesc& charDesc = m_vCharDescs[iChar - g_iMinChar];
+		char cChar = (char)iChar;
+
+		charDesc.m_iBufferLeft = _CalcD('A', cChar);
+		charDesc.m_iBufferRight = _CalcD(cChar, 'A');
+	}
+}
+
 bool CFontRipper::RipFont(const std::string & _sFont, int _iSize)
 {
 

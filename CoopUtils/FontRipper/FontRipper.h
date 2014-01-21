@@ -27,6 +27,7 @@ class CFontRipper : public CSingleSizeFont
 	int _CalcD(char _c1, char _c2);
 	void _CalcSpaceSize();
 	void _FillCharDescs_BitmapUpperLeft();
+   void _FillCharDescs_LeftRight();
 
 	// TODO: Get nonblack data.
 
