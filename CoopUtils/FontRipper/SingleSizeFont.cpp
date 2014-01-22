@@ -195,3 +195,8 @@ bool CSingleSizeFont::Load(const string & _sFilenameBase)
 {
 	return _ReadFontFromBmpIni(_sFilenameBase);
 }
+
+int CSingleSizeFont::GetCharCount() const
+{
+	return m_vCharDescs.size();
+}

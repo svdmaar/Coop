@@ -847,6 +847,11 @@ void GenerateFont(const string & _sFontName, int _iFontSize)
 
 int main()
 {
+	CFontRipper fontRipper;
+	fontRipper.RipFont("Arial Black", 200);
+
+	return 0;
+
 	HDC hDcDesktop = GetDC(NULL);
 
 	int iWidth = GetDeviceCaps(hDcDesktop, HORZRES);
@@ -862,6 +867,7 @@ int main()
 
 	//GenerateFont("Arial Black", 100);
 
+	/*
 	CSingleSizeFont font;
 	if(!font.Load("out_chars/arial_black_100"))
 		cout << "Load error" << endl;
@@ -871,6 +877,7 @@ int main()
 		cout << "Draw error" << endl;
 
 	bmText.Save("fer.bmp");
+	*/
 
 	/*
 	ReadFontFromBmpIni();
