@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-	RunDemo(GetPixelPerfectTextureDemo());
+	RunDemo(GetFirstFontDemo());
 
 	return 0;
 }

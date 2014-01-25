@@ -19,3 +19,4 @@ SD3dDemo GetVertexBufferDemo();
 SD3dDemo GetTextureDemo();
 SD3dDemo GetAlphaBlendingDemo();
 SD3dDemo GetPixelPerfectTextureDemo();
+SD3dDemo GetFirstFontDemo();

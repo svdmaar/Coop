@@ -78,20 +78,29 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Coop\Bitmap.cpp" />
+    <ClCompile Include="..\FontRipper\SingleSizeFont.cpp" />
+    <ClCompile Include="..\IniFileReader\IniFile.cpp" />
     <ClCompile Include="AlphaBlendingDemo.cpp" />
     <ClCompile Include="D3dDemos.cpp" />
+    <ClCompile Include="FirstFontDemo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="EnvSetup.cpp" />
     <ClCompile Include="PixelPerfectTextureDemo.cpp" />
     <ClCompile Include="SimpleDemo.cpp" />
+    <ClCompile Include="SingleSizeD3dFont.cpp" />
     <ClCompile Include="TextureDemo.cpp" />
     <ClCompile Include="VertexBufferDemo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Coop\Bitmap.h" />
     <ClInclude Include="..\..\Coop\BitmapTypes.h" />
+    <ClInclude Include="..\FontRipper\SingleSizeFont.h" />
+    <ClInclude Include="..\IniFileReader\IniFile.h" />
     <ClInclude Include="D3dDemos.h" />
     <ClInclude Include="EnvSetup.h" />
+    <ClInclude Include="FloatPoint.h" />
+    <ClInclude Include="FloatRect.h" />
+    <ClInclude Include="SingleSizeD3dFont.h" />
     <ClInclude Include="VertexFormats.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
