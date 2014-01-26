@@ -10,6 +10,8 @@ using namespace std;
 
 static CSingleSizeD3dFont g_font;
 
+static DWORD g_dwLastFrame = 0;
+
 static bool Init()
 {
 	HRESULT hr;
@@ -33,7 +35,6 @@ static bool Init()
 		cout << "Failed to init font" << endl;
 	}
 
-
 	return true;
 }
 
@@ -47,12 +48,20 @@ static bool Render()
 	hr = g_pD3dDevice->Clear(0, NULL, D3DCLEAR_TARGET | D3DCLEAR_ZBUFFER, D3DCOLOR_ARGB(0, 0, 0, 0), 1.0f, 0);
 	if(FAILED(hr)) cout << "clear: " << hr << endl;
 
-	static int nFrames = 0;
+	DWORD dwCurrentTime = GetTickCount();
+	DWORD dwDiff = dwCurrentTime - g_dwLastFrame;
+	int iFrameRate = 0;
+
+	if(dwDiff > 0)
+	{
+		iFrameRate = 1000 / (dwCurrentTime - g_dwLastFrame);
+	}
+
 	stringstream ssText;
 	ssText << "I love Fernanda" << endl;
-	ssText << nFrames;
+	ssText << iFrameRate;
 
-	nFrames++;
+	g_dwLastFrame = dwCurrentTime;
 
 	POINT pPixel;
 	pPixel.x = 0;
@@ -77,11 +86,11 @@ static bool CleanUp()
 	return true;
 }
 
-SD3dDemo GetFirstFontDemo()
+SD3dDemo GetFrameRateDemo()
 {
 	SD3dDemo demo;
 
-	demo.m_sName = "First Font Demo";
+	demo.m_sName = "Frame Rate Demo";
 	demo.m_pInit = Init;
 	demo.m_pRender = Render;
 	demo.m_pCleanUp = CleanUp;

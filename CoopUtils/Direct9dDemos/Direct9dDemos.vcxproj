@@ -83,6 +83,7 @@
     <ClCompile Include="AlphaBlendingDemo.cpp" />
     <ClCompile Include="D3dDemos.cpp" />
     <ClCompile Include="FirstFontDemo.cpp" />
+    <ClCompile Include="FrameRateDemo.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="EnvSetup.cpp" />
     <ClCompile Include="PixelPerfectTextureDemo.cpp" />

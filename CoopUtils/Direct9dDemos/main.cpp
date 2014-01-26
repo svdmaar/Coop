@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-	RunDemo(GetFirstFontDemo());
+	RunDemo(GetFrameRateDemo());
 
 	return 0;
 }
