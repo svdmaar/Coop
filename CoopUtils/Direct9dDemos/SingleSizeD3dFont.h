@@ -14,6 +14,7 @@ class CSingleSizeD3dFont : public CSingleSizeFont
 	POINT m_pScreenSize;
 	SFloatPoint m_pUpperLeft;
 	SFloatPoint m_pPixelSize;
+	DWORD m_dwColor;
 
 	bool _CalcUpperLeftCoor(const POINT & _pPixel, SFloatPoint & _pCoor) const;
 	bool _CalcCoorsForPixels(const RECT & _rPixels, SFloatRect & _rCoors) const;
@@ -21,11 +22,12 @@ class CSingleSizeD3dFont : public CSingleSizeFont
 	bool _CalcTextureCoors(const RECT & _rTexels, SFloatRect & _rTexCoors) const;
 	bool _FillVertexBuffer(STexturedVertex * _pVertices) const;
 	bool _CalcRelCoorsForChar(const SCharDesc & _charDesc, SFloatRect & _rCoors) const;
+	DWORD _ColorPixel(DWORD _dwPixel) const;
 
 public:
 	CSingleSizeD3dFont();
 	~CSingleSizeD3dFont();
 
-	bool Init(const std::string & _sFilenameBase, const POINT & _pScreenSize);
+	bool Init(const std::string & _sFilenameBase, const POINT & _pScreenSize, DWORD _dwColor);
 	bool RenderString(const std::string & _sText, const POINT & _pPixel);
 };

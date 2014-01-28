@@ -9,8 +9,11 @@
 using namespace std;
 
 static CSingleSizeD3dFont g_font;
-
 static DWORD g_dwLastFrame = 0;
+
+const int g_iTextureSize = 20;
+const int g_iTextureCount = 20;
+static CBitmap g_bmSprites[g_iTextureCount];
 
 static bool Init()
 {
@@ -30,7 +33,7 @@ static bool Init()
 	POINT pScreenSize;
 	pScreenSize.x = iClientWidth;
 	pScreenSize.y = iClientHeight;
-	if(!g_font.Init("fonts/Arial_Black_100", pScreenSize, 0xffff))
+	if(!g_font.Init("fonts/Arial_Black_100", pScreenSize, 0x40))
 	{
 		cout << "Failed to init font" << endl;
 	}
@@ -58,7 +61,6 @@ static bool Render()
 	}
 
 	stringstream ssText;
-	ssText << "I love Fernanda" << endl;
 	ssText << iFrameRate;
 
 	g_dwLastFrame = dwCurrentTime;
@@ -86,11 +88,11 @@ static bool CleanUp()
 	return true;
 }
 
-SD3dDemo GetFrameRateDemo()
+SD3dDemo GetAlphaBlendingDemo2()
 {
 	SD3dDemo demo;
 
-	demo.m_sName = "Frame Rate Demo";
+	demo.m_sName = "Alpha Blending Demo 2";
 	demo.m_pInit = Init;
 	demo.m_pRender = Render;
 	demo.m_pCleanUp = CleanUp;

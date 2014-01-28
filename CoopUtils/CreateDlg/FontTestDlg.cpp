@@ -1,35 +1,51 @@
 #include "FontTestDlg.h"
 
+#include <string>
+
+using namespace std;
+
 static LRESULT CALLBACK FontTestCallbackFunc(HWND hWindow, UINT uMessage, WPARAM wParam, LPARAM lParam)
 {
-   switch(uMessage)
-   {
-      case WM_CLOSE:
-         PostQuitMessage(0);
-         return TRUE;
-      case WM_PAINT:
-         PAINTSTRUCT ps;
-         HDC hDc = BeginPaint(hWindow, &ps);
+	HFONT hFont = 0;
+	HDC hDc = 0;
+	wstring sText;
 
-         RECT rText;
-         rText.left = rText.top = 0;
-         rText.right = rText.bottom = 200;
+	switch(uMessage)
+	{
+	case WM_CREATE:
+		hFont = CreateFont(100, 0, 0, 0, 400, FALSE, FALSE, FALSE, ANSI_CHARSET, 
+			OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, L"Arial Black");
+		hDc = GetDC(hWindow);
 
-         SetTextColor(hDc, 0xffffff);
-         SetBkColor(hDc, 0);
-         //TextOut(hDc, 0, 0, L"Test1\r\nTest2", 10);
-         DrawText(hDc, L"Test1\nTest2", 11, &rText, DT_LEFT | DT_TOP);
+		SelectObject(hDc, hFont);
+		break;
+	case WM_PAINT:
+		PAINTSTRUCT ps;
+		hDc = BeginPaint(hWindow, &ps);
 
-         EndPaint(hWindow, &ps);
-         break;
-   }
+		RECT rText;
+		rText.left = rText.top = 0;
+		rText.right = rText.bottom = 1000;
 
-   return DefWindowProc(hWindow, uMessage, wParam, lParam);
+		SetTextColor(hDc, 0xffffff);
+		SetBkColor(hDc, 0);
+		
+		sText = L"I love Fernanda\nSo so much\nA lot, a lot";
+		DrawText(hDc, sText.c_str(), sText.length(), &rText, DT_LEFT | DT_TOP);
+
+		EndPaint(hWindow, &ps);
+		break;
+	case WM_CLOSE:
+		PostQuitMessage(0);
+		return TRUE;
+	}
+
+	return DefWindowProc(hWindow, uMessage, wParam, lParam);
 }
 
 void RunDlgFont()
 {
-   SetupWindow(L"Font test window", WND_WINDOWED_DC, FontTestCallbackFunc);
-   
-   RunMainLoop();
+	SetupWindow(L"Font test window", WND_WINDOWED_DC, FontTestCallbackFunc);
+
+	RunMainLoop();
 }

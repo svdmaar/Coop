@@ -28,7 +28,7 @@ static bool Init()
 	POINT pScreenSize;
 	pScreenSize.x = iClientWidth;
 	pScreenSize.y = iClientHeight;
-	if(!g_font.Init("fonts/Arial_Black_100", pScreenSize))
+	if(!g_font.Init("fonts/Arial_Black_100", pScreenSize, 0xffffff))
 	{
 		cout << "Failed to init font" << endl;
 	}
@@ -50,7 +50,8 @@ static bool Render()
 	static int nFrames = 0;
 	stringstream ssText;
 	ssText << "I love Fernanda" << endl;
-	ssText << nFrames;
+	ssText << "So so much" << endl;
+	ssText << "A lot, a lot" << endl;
 
 	nFrames++;
 

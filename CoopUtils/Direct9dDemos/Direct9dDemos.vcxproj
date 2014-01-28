@@ -81,6 +81,7 @@
     <ClCompile Include="..\FontRipper\SingleSizeFont.cpp" />
     <ClCompile Include="..\IniFileReader\IniFile.cpp" />
     <ClCompile Include="AlphaBlendingDemo.cpp" />
+    <ClCompile Include="AlphaBlendingDemo2.cpp" />
     <ClCompile Include="D3dDemos.cpp" />
     <ClCompile Include="FirstFontDemo.cpp" />
     <ClCompile Include="FrameRateDemo.cpp" />

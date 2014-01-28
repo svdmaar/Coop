@@ -25,6 +25,7 @@ static RECT CalcDesktopCenterWindow(DWORD _dwStyle)
 	rClient.bottom = 3 * rClient.top;
 
 	AdjustWindowRect(&rClient, _dwStyle, FALSE);
+
 	return rClient;
 }
 

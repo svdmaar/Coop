@@ -6,7 +6,7 @@ using namespace std;
 
 int main()
 {
-	RunDemo(GetFrameRateDemo());
+	RunDemo(GetAlphaBlendingDemo2());
 
 	return 0;
 }

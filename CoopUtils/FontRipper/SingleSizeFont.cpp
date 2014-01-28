@@ -171,7 +171,7 @@ bool CSingleSizeFont::_CalcCharPositions(const std::string & _sText, std::vector
 		int iCharIndex = iIntChar - m_iMinChar;
 		const SCharDesc & charDesc = m_vCharDescs[iCharIndex];
 
-		if(iCurrentColumn > 0)
+		//if(iCurrentColumn > 0)
 		{
 			iCurrentColumn += charDesc.m_iBufferLeft;
 		}

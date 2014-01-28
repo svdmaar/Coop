@@ -147,8 +147,10 @@ bool CSingleSizeD3dFont::_FillVertexBuffer(STexturedVertex * _pVertices) const
 	return true;
 }
 
-bool CSingleSizeD3dFont::Init(const std::string & _sFilenameBase, const POINT & _pScreenSize)
+bool CSingleSizeD3dFont::Init(const std::string & _sFilenameBase, const POINT & _pScreenSize, DWORD _dwColor)
 {
+	m_dwColor = _dwColor;
+
 	if(!Load(_sFilenameBase))
 	{
 		return false;
@@ -194,6 +196,7 @@ bool CSingleSizeD3dFont::Init(const std::string & _sFilenameBase, const POINT & 
 		for(int iColumn = 0; iColumn < iTextureWidth; iColumn++)
 		{
 			DWORD dwPixel = m_bmBigBitmap.GetPixel(iRow, iColumn);
+			dwPixel = _ColorPixel(dwPixel);
 
 			int iTargetIndex = iRow * lockedRect.Pitch + iColumn * sizeof(DWORD);
 			DWORD * pTarget = (DWORD *)(pbBits + iTargetIndex);
@@ -256,4 +259,24 @@ bool CSingleSizeD3dFont::RenderString(const std::string & _sText, const POINT & 
 	}
 
 	return true;
+}
+
+DWORD CSingleSizeD3dFont::_ColorPixel(DWORD _dwPixel) const
+{
+	int iRedColor;
+	int iGreenColor;
+	int iBlueColor;
+	CBitmap::DecodeColor(m_dwColor, iRedColor, iGreenColor, iBlueColor);
+
+	int iRedPixel;
+	int iGreenPixel;
+	int iBluePixel;
+	CBitmap::DecodeColor(_dwPixel, iRedPixel, iGreenPixel, iBluePixel);
+
+	int iRedOutput = iRedColor * iRedPixel / 255;
+	int iGreenOutput = iGreenColor * iGreenPixel / 255;
+	int iBlueOutput = iBlueColor * iBluePixel / 255;
+	DWORD dwNewPixel = CBitmap::EncodeColor(iRedOutput, iGreenOutput, iBlueOutput);
+
+	return dwNewPixel;
 }
