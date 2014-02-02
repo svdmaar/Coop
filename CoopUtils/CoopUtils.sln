@@ -11,6 +11,8 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "CreateDlg", "CreateDlg\Crea
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Direct9dDemos", "Direct9dDemos\Direct9dDemos.vcxproj", "{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}"
 EndProject
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "SpriteLib", "SpriteLib\SpriteLib.vcxproj", "{F5094B35-FEB1-4EE6-942A-A2F501F50EF5}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Win32 = Debug|Win32
@@ -37,6 +39,10 @@ Global
 		{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}.Debug|Win32.Build.0 = Debug|Win32
 		{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}.Release|Win32.ActiveCfg = Release|Win32
 		{3FA8CB78-67CE-4F63-A7E8-A66F5508697E}.Release|Win32.Build.0 = Release|Win32
+		{F5094B35-FEB1-4EE6-942A-A2F501F50EF5}.Debug|Win32.ActiveCfg = Debug|Win32
+		{F5094B35-FEB1-4EE6-942A-A2F501F50EF5}.Debug|Win32.Build.0 = Debug|Win32
+		{F5094B35-FEB1-4EE6-942A-A2F501F50EF5}.Release|Win32.ActiveCfg = Release|Win32
+		{F5094B35-FEB1-4EE6-942A-A2F501F50EF5}.Release|Win32.Build.0 = Release|Win32
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

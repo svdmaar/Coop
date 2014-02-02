@@ -157,6 +157,14 @@ void CIniFile::PrintValues() const
 	}
 }
 
+bool CIniFile::BlockExists(const std::string & _sBlock) const
+{
+	map<string, SIniBlock>::const_iterator iBlock;
+	iBlock = m_mIniBlocks.find(_sBlock);
+
+	return iBlock != m_mIniBlocks.cend();
+}
+
 void CIniFile::TestTrim()
 {
 	string strOrg, strTrim;

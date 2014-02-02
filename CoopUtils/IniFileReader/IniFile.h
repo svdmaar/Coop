@@ -24,6 +24,8 @@ public:
 	std::string GetValueString(const std::string& _sBlock, const std::string& _sKey) const;
 	int GetValueInt(const std::string& _sBlock, const std::string& _sKey) const;
 
+	bool BlockExists(const std::string & _sBlock) const;
+
 	void PrintValues() const;
 
 	static void TestTrim();
