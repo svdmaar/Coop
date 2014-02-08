@@ -2,6 +2,8 @@
 
 #include <fstream>
 #include <iostream>
+#include <algorithm>
+#include <sstream>
 
 using namespace std;
 
@@ -184,4 +186,70 @@ void CIniFile::TestTrim()
 	strOrg = "  test  ";
 	strTrim = _TrimString(strOrg);
 	cout << "\"" << strTrim << "\"" << endl;
+}
+
+vector<int> CIniFile::GetValueIntVector(const string & _sBlock, const string & _sKey) const
+{
+	vector<int> vOut;
+
+	vector<string> vStringValues = _GetValueStringVector(_sBlock, _sKey);
+	
+	for(vector<string>::iterator i = vStringValues.begin(); i != vStringValues.end(); i++)
+	{
+		string sValue = *i;
+		int iValue = atoi(sValue.c_str());
+		vOut.push_back(iValue);
+	}
+
+	return vOut;
+}
+
+vector<string> CIniFile::_GetValueStringVector(const string & _sBlock, const string & _sKey) const
+{
+	vector<string> vOut;
+
+	string sCompleteString = GetValueString(_sBlock, _sKey);
+
+	if(sCompleteString == "")
+	{
+		return vOut;
+	}
+
+	char cFirstChar = sCompleteString[0];
+	char cLastChar = sCompleteString[sCompleteString.length() - 1];
+
+	if((cFirstChar != '[') || (cLastChar != ']'))
+	{
+		vOut.push_back(sCompleteString);
+		return vOut;
+	}
+
+	sCompleteString = sCompleteString.substr(1, sCompleteString.length() - 2);
+
+	vOut = _SplitString(sCompleteString, ',');
+
+	vector<string>::iterator i;
+	for(i = vOut.begin(); i != vOut.end(); i++)
+	{
+		string s = *i;
+		s = _TrimString(s);
+		*i = s;
+	}
+
+	return vOut;
+}
+
+vector<string> CIniFile::_SplitString(const string & _sText, char _cSplit)
+{
+	vector<string> vOut;
+
+	istringstream iss(_sText);
+	string s;
+	
+	while(getline(iss, s, _cSplit))
+	{
+		vOut.push_back(s);
+	}
+
+	return vOut;
 }

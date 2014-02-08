@@ -145,12 +145,11 @@ bool CSprite::_CalculatePreRender()
 		m_iRenderedIndex = min(m_iRenderedIndex, nFrames - 1);
 		break;
 	case SPRITEWRAP_ZIGZAG:
-		m_iRenderedIndex = m_iIndex % (2 * nFrames);
+		m_iRenderedIndex = m_iIndex % (2 * nFrames - 2);
 		if(m_iRenderedIndex >= nFrames)
 		{
-			m_iRenderedIndex = (2 * nFrames) - m_iRenderedIndex - 1;
+			m_iRenderedIndex = (2 * nFrames - 2) - m_iRenderedIndex;
 		}
-
 		break;
 	default:
 		assert(false);

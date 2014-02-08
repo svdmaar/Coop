@@ -9,11 +9,14 @@ int main()
 	//CIniFile::TestTrim();
 
 	CIniFile iniFile;
-	iniFile.Load("font.ini");
+	iniFile.Load("testfile.ini");
 
 	iniFile.PrintValues();
 
 	cout << "value from file: \"" << iniFile.GetValueString("info", "name").c_str() << "\"" << endl;
+
+	vector<int> vValues = iniFile.GetValueIntVector("testblock", "intarray");
+	cout << vValues[1] << endl;
 
 	return 0;
 }
