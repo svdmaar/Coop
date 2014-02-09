@@ -15,14 +15,17 @@ class CSpriteLoader
 	bool m_bInited;
 
 	static std::string _FormatSpriteBlockName(int _iIndex);
+	bool _FillSpriteDesc(const std::string & _sName, SSpriteDesc & _desc);
+
+	// Todo: keep track of textures and multiple bmp/ini files.
 
 public:
 	CSpriteLoader();
 	~CSpriteLoader();
 
 	bool Init(const std::string & _sFilenameBase);
+	CSprite * LoadSpriteOld(const std::string & _sName);
+
 	CSprite * LoadSprite(const std::string & _sName);
-
-
 
 };

@@ -4,6 +4,8 @@
 
 #include <vector>
 
+class CTexture;
+
 // What to do when accessing frame index out-of-bounds
 enum E_SPRITEWRAPMODE
 {
@@ -24,10 +26,12 @@ struct SDirectionSpriteSet
 {
 	float m_fDir; // In radians.
 	std::vector<CBitmap> m_frames;
+	std::vector<RECT> m_rSubRects;
 };
 
 struct SSpriteDesc
 {
 	std::vector<SDirectionSpriteSet> m_spriteSets;
 	E_SPRITEWRAPMODE m_eWrapMode;
+	CTexture * m_pTexture;
 };

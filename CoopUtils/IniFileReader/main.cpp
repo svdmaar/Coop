@@ -18,5 +18,8 @@ int main()
 	vector<int> vValues = iniFile.GetValueIntVector("testblock", "intarray");
 	cout << vValues[1] << endl;
 
+	POINT pTest = iniFile.GetValuePoint("testblock", "testPoint");
+	cout << "(" << pTest.x << ", " << pTest.y << ")" << endl;
+
 	return 0;
 }

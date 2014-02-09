@@ -11,16 +11,23 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="RenderedSprite.h" />
     <ClInclude Include="Sprite.h" />
     <ClInclude Include="SpriteDesc.h" />
     <ClInclude Include="SpriteLoader.h" />
+    <ClInclude Include="Texture.h" />
+    <ClInclude Include="TextureImpl.h" />
+    <ClInclude Include="VideoDevice.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\Coop\Bitmap.cpp" />
     <ClCompile Include="..\IniFileReader\IniFile.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="RenderedSprite.cpp" />
     <ClCompile Include="Sprite.cpp" />
     <ClCompile Include="SpriteLoader.cpp" />
+    <ClCompile Include="Texture.cpp" />
+    <ClCompile Include="VideoDevice.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{F5094B35-FEB1-4EE6-942A-A2F501F50EF5}</ProjectGuid>

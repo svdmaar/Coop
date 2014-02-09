@@ -106,7 +106,7 @@ public:
 		m_pData = new T[m_iWidth * m_iHeight];
 	}
 
-	CDataMap<T> operator=(const CDataMap<T> & _rhs)
+	CDataMap<T> & operator=(const CDataMap<T> & _rhs)
 	{
 		if(this != &_rhs)
 		{

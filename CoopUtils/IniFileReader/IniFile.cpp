@@ -253,3 +253,20 @@ vector<string> CIniFile::_SplitString(const string & _sText, char _cSplit)
 
 	return vOut;
 }
+
+POINT CIniFile::GetValuePoint(const string & _sBlock, const string & _sKey) const
+{
+	vector<int> vIntValues = GetValueIntVector(_sBlock, _sKey);
+	POINT pOut;
+	ZeroMemory(&pOut, sizeof(pOut));
+
+	if(vIntValues.size() != 2)
+	{
+		return pOut;
+	}
+
+	pOut.x = vIntValues[0];
+	pOut.y = vIntValues[1];
+
+	return pOut;
+}

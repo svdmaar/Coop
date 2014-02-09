@@ -1,0 +1,2 @@
+#include "RenderedSprite.h"
+

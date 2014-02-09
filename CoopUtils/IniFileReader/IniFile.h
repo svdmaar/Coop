@@ -4,6 +4,9 @@
 #include <vector>
 #include <map>
 
+// TODO: make independent from windows (POINT -> SIntPoint).
+#include <Windows.h>
+
 struct SIniBlock
 {
 	std::map<std::string, std::string> m_mLines;
@@ -27,6 +30,7 @@ public:
 	std::string GetValueString(const std::string& _sBlock, const std::string& _sKey) const;
 	int GetValueInt(const std::string& _sBlock, const std::string& _sKey) const;
 	std::vector<int> GetValueIntVector(const std::string& _sBlock, const std::string& _sKey) const;
+	POINT GetValuePoint(const std::string& _sBlock, const std::string& _sKey) const;
 
 	bool BlockExists(const std::string & _sBlock) const;
 

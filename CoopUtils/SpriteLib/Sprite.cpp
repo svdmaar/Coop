@@ -1,5 +1,8 @@
 #include "Sprite.h"
 
+#include "VideoDevice.h"
+#include "../../Coop/DataMap.h"
+
 #include <d3d9.h>
 #include <d3dx9.h>
 
@@ -8,6 +11,12 @@
 
 using namespace std;
 
+extern CBitmap * g_pbmScreenBitmap;
+
+// Just for rendering to bitmap:
+extern CBitmap * g_pbmSelectedTexture;
+extern CDataMap<float> * g_pmSelectedAlpha;
+
 struct SSpriteImpl
 {
 	IDirect3DTexture9 * m_pTexture;
@@ -15,6 +24,9 @@ struct SSpriteImpl
 
 	// Debug
 	SSpriteDesc m_spriteDesc;
+
+	// For bitmap.
+	RECT m_rPixels;
 
 	SSpriteImpl()
 	{
@@ -49,7 +61,7 @@ bool CSprite::SetFrameIndex(int _iIndex)
 	return true;
 }
 
-CSprite * CSprite::Create(const SSpriteDesc & _spriteDesc)
+CSprite * CSprite::CreateOld(const SSpriteDesc & _spriteDesc)
 {
 	CSprite * pSprite = new CSprite();
 	pSprite->m_pImpl->m_spriteDesc = _spriteDesc;
@@ -57,7 +69,64 @@ CSprite * CSprite::Create(const SSpriteDesc & _spriteDesc)
 	return pSprite;
 }
 
-bool CSprite::Render()
+CSprite * CSprite::Create(CTexture * _pTexture, const SSpriteDesc & _spriteDesc)
+{
+	CSprite * pOut = new CSprite();
+	pOut->m_pTexture = _pTexture;
+	pOut->m_pImpl->m_spriteDesc = _spriteDesc;
+
+	return pOut;
+}
+
+bool CSprite::Render(const SSpriteRenderArgs & _args)
+{
+	g_pVideoDevice->SelectTexture(m_pTexture);
+
+	RECT rSubRect = m_pImpl->m_spriteDesc.m_spriteSets[_args.m_iDirection].m_rSubRects[_args.m_iFrameIndex];
+	CBitmap bmSubBitmap = g_pbmSelectedTexture->GetSubBitmap(rSubRect);
+
+	POINT pPos;
+	pPos.x = (int)_args.m_pPosition.m_fX;
+	pPos.y = (int)_args.m_pPosition.m_fY;
+
+	int iSubRectWidth = rSubRect.right - rSubRect.left;
+	int iSubRectHeight = rSubRect.bottom - rSubRect.top;
+	for(int iRow = 0; iRow < iSubRectHeight; iRow++)
+	{
+		for(int iColumn = 0; iColumn < iSubRectWidth; iColumn++)
+		{
+			int iSourceRow = iRow + rSubRect.top;
+			int iSourceColumn = iColumn + rSubRect.left;
+			int iTargetRow = iRow + pPos.y;
+			int iTargetColumn = iColumn + pPos.x;
+
+			if((iTargetRow < 0) || (iTargetColumn < 0))
+			{
+				continue;
+			}
+
+			if((iTargetRow >= g_pbmScreenBitmap->GetHeight()) || (iTargetColumn >= g_pbmScreenBitmap->GetWidth()))
+			{
+				continue;
+			}
+
+			float fAlpha = g_pmSelectedAlpha->GetValue(iSourceRow, iSourceColumn);
+			if(fAlpha < 0.5f)
+			{
+				continue;
+			}
+
+			DWORD dwPixel = g_pbmSelectedTexture->GetPixel(iSourceRow, iSourceColumn);
+			g_pbmScreenBitmap->SetPixel(iTargetRow, iTargetColumn, dwPixel);
+		}
+	}
+	
+	//g_pbmScreenBitmap->InsertBitmap(pPos.y, pPos.x, bmSubBitmap);
+
+	return true;
+}
+
+bool CSprite::RenderOld()
 {
 	// debug, to file.
 	stringstream ssFilename;
