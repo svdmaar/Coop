@@ -1,5 +1,6 @@
 #include "SpriteLoader.h"
 #include "VideoDevice.h"
+#include "RenderedSprite.h"
 
 #include <iostream>
 
@@ -18,16 +19,30 @@ int main()
 
 	CVideoDevice::Init();
 
-	for(int i = 0; i < 8; i++)
+	CRenderedSprite * pRenderedSprite = new CRenderedSprite(pSprite);
+
+	for(int i = 0; i < 100; i++)
 	{
 		g_pVideoDevice->StartScene();
 
+		/*
 		args.m_pPosition.m_fX = 20.0f + (float)i;
 		args.m_pPosition.m_fY = 20.0f;
 
 		args.m_iFrameIndex = i;
 
 		pSprite->Render(args);
+		*/
+
+		pRenderedSprite->SetDirection(0.0f);
+		pRenderedSprite->SetFrameIndex(i);
+
+		SFloatPoint pPosition;
+		pPosition.m_fX = 20.0f + (float)i;
+		pPosition.m_fY = 20.0f;
+		pRenderedSprite->SetPosition(pPosition);
+
+		pRenderedSprite->Render();
 
 		g_pVideoDevice->EndScene();
 	}

@@ -43,4 +43,8 @@ public:
 
 	static CSprite * CreateOld(const SSpriteDesc & _spriteDesc);
 	static CSprite * Create(CTexture * _pTexture, const SSpriteDesc & _spriteDesc);
+
+	E_SPRITEWRAPMODE GetWrapMode() const;
+	int GetFrameCount() const;
+	std::vector<float> GetDirections() const;
 };

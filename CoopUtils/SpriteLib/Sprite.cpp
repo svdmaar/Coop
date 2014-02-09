@@ -121,8 +121,6 @@ bool CSprite::Render(const SSpriteRenderArgs & _args)
 		}
 	}
 	
-	//g_pbmScreenBitmap->InsertBitmap(pPos.y, pPos.x, bmSubBitmap);
-
 	return true;
 }
 
@@ -225,4 +223,30 @@ bool CSprite::_CalculatePreRender()
 	}
 
 	return true;
+}
+
+E_SPRITEWRAPMODE CSprite::GetWrapMode() const
+{
+	return m_pImpl->m_spriteDesc.m_eWrapMode;
+}
+
+int CSprite::GetFrameCount() const
+{
+	return m_pImpl->m_spriteDesc.m_spriteSets[0].m_frames.size();
+}
+
+vector<float> CSprite::GetDirections() const
+{
+	vector<float> vOut;
+
+	const vector<SDirectionSpriteSet> & vSpriteSets = m_pImpl->m_spriteDesc.m_spriteSets;
+	vector<SDirectionSpriteSet>::const_iterator i;
+
+	for(i = vSpriteSets.begin(); i != vSpriteSets.end(); i++)
+	{
+		float fAngle = (*i).m_fDir;
+		vOut.push_back(fAngle);
+	}
+
+	return vOut;
 }

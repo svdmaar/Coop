@@ -33,6 +33,7 @@ bool CSpriteLoader::Init(const std::string & _sFilenameBase)
 	return true;
 }
 
+/*
 CSprite * CSpriteLoader::LoadSpriteOld(const std::string & _sName)
 {
 	SSpriteDesc spriteDesc;
@@ -111,6 +112,7 @@ CSprite * CSpriteLoader::LoadSpriteOld(const std::string & _sName)
 	CSprite * pOutput = CSprite::CreateOld(spriteDesc);
 	return pOutput;
 }
+*/
 
 string CSpriteLoader::_FormatSpriteBlockName(int _iIndex)
 {
@@ -231,10 +233,17 @@ bool CSpriteLoader::_FillSpriteDesc(const std::string & _sName, SSpriteDesc & _d
 
 	string sWrapMode = m_iniFile.GetValueString(sBlock, "wrapMode");
 
-	// TODO: the rest.
 	if(sWrapMode == "zigzag")
 	{
 		_desc.m_eWrapMode = SPRITEWRAP_ZIGZAG;
+	}
+	else if(sWrapMode == "modulo")
+	{
+		_desc.m_eWrapMode = SPRITEWRAP_MODULO;
+	}
+	else if(sWrapMode == "clamp")
+	{
+		_desc.m_eWrapMode = SPRITEWRAP_CLAMP;
 	}
 
 	return true;

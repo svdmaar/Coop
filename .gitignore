@@ -21,3 +21,4 @@ bin/*
 *.log
 *.user
 CoopUtils/*/Debug/*
+CoopUtils/SpriteLib/renders/*.bmp
