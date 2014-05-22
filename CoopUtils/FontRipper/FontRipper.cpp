@@ -62,23 +62,9 @@ void CFontRipper::_SelectFontAndSize(const string & _sFontName, int _iSize)
 	SelectObject(m_hDc, font);
 }
 
-void CFontRipper::_CreateStringBitmap(const string & _sText, CBitmap & _bmOut, POINT & _pos)
+void CFontRipper::_CreateStringBitmapTrimmed(const string & _sText, CBitmap & _bmOut, POINT & _pos)
 {
-	int nLength = _sText.length();
-	int nBufferSize = nLength + 1;
-
-	wchar_t * pwcBuffer = new wchar_t[nBufferSize];
-	ZeroMemory(pwcBuffer, sizeof(wchar_t) * nBufferSize);
-
-	char * pCharOutBuffer = (char *)(void *)pwcBuffer;
-
-	for(int iIndex = 0; iIndex < nLength; iIndex++)
-	{
-		int iTargetIndex = iIndex * 2;
-		char cChar = _sText[iIndex];
-
-		pCharOutBuffer[iTargetIndex] = cChar;
-	}
+   wstring wsText = _ConvertStringToWide(_sText);
 
 	RECT rText;
 	ZeroMemory(&rText, sizeof(rText));
@@ -91,7 +77,7 @@ void CFontRipper::_CreateStringBitmap(const string & _sText, CBitmap & _bmOut, P
 	SetBkColor(m_hDc, 0);
 
 	FillRect(m_hDc, &rText, (HBRUSH)GetStockObject(BLACK_BRUSH));
-	DrawText(m_hDc, pwcBuffer, -1, &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
+   DrawText(m_hDc, wsText.c_str(), -1, &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
 
 	CBitmap bmFull;
 	_ExportDcToBitmap(bmFull);
@@ -106,19 +92,19 @@ int CFontRipper::_CalcD(char _c1, char _c2)
 	stringstream ss;
 
 	ss << _c1;
-	_CreateStringBitmap(ss.str(), bmText, pos);
+	_CreateStringBitmapTrimmed(ss.str(), bmText, pos);
 	int iWWidth = bmText.GetWidth();
 	ss.str("");
 
 	ss << _c2;
-	_CreateStringBitmap(ss.str(), bmText, pos);
+	_CreateStringBitmapTrimmed(ss.str(), bmText, pos);
 	int iAWidth = bmText.GetWidth();
 	ss.str("");
 
 	int iExpectedWidth = iWWidth + iAWidth;
 
 	ss << _c1 << _c2;
-	_CreateStringBitmap(ss.str(), bmText, pos);
+	_CreateStringBitmapTrimmed(ss.str(), bmText, pos);
 	int iRealWidth = bmText.GetWidth();
 
 	return iRealWidth - iExpectedWidth;
@@ -132,10 +118,10 @@ void CFontRipper::_CalcSpaceSize()
 	cout << "Calculating space width..." << endl;
 
 	// Assume A has no left and right buffer.
-	_CreateStringBitmap("A A", bmText, pos);
+	_CreateStringBitmapTrimmed("A A", bmText, pos);
 	int iWidthWithSpace = bmText.GetWidth();
 
-	_CreateStringBitmap("AA", bmText, pos);
+	_CreateStringBitmapTrimmed("AA", bmText, pos);
 	int iWidthWithoutSpace = bmText.GetWidth();
 
 	int iSpaceSize = iWidthWithSpace - iWidthWithoutSpace;
@@ -160,25 +146,16 @@ void CFontRipper::_FillCharDescs_BitmapUpperLeft()
 	for(int iChar = g_iMinChar; iChar < g_iMaxChar; iChar++)
 	{
 		cout << "For bitmap and upper left: " << iChar << "..." << endl;
-
-		char cChar = (char)iChar;
-		wchar_t wcBuffer[4];
-
-		ZeroMemory(wcBuffer, sizeof(wcBuffer));
-
-		char * pcFirstChar = (char *)(void *)wcBuffer;
-		*pcFirstChar = cChar;
-
-		FillRect(m_hDc, &rBlack, (HBRUSH)GetStockObject(BLACK_BRUSH));
-		DrawText(m_hDc, wcBuffer, -1, &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
-
-		CBitmap bmFull;
-		_ExportDcToBitmap(bmFull);
-
 		int iTargetIndex = iChar - g_iMinChar;
 		SCharDesc & charDesc = m_vCharDescs[iTargetIndex];
 
-		GetNonBlackData(bmFull, charDesc.m_pUpperLeft, charDesc.m_bitmap);
+		char cChar = (char)iChar;
+      char buffer[2];
+      buffer[0] = cChar;
+      buffer[1] = '\0';
+
+      string sText = buffer;
+      _CreateStringBitmapTrimmed(sText, charDesc.m_bitmap, charDesc.m_pUpperLeft);
 	}
 }
 
@@ -468,14 +445,10 @@ void CFontRipper::_CalcFontLineDistance()
 	ss << cHeighest << cLowest;
 
 	string sText = ss.str();
-	wstring wsText = _ConvertStringToWide(sText);
-	FillRect(m_hDc, &rText, (HBRUSH)GetStockObject(BLACK_BRUSH));
-	DrawText(m_hDc, wsText.c_str(), wsText.length(), &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
 
-	_ExportDcToBitmap(bmAll);
-	CBitmap bmSub;
+   CBitmap bmSub;
 	POINT pPos;
-	GetNonBlackData(bmAll, pPos, bmSub);
+   _CreateStringBitmapTrimmed(sText, bmSub, pPos);
 
 	int iSingleHeight = bmSub.GetHeight();
 
@@ -483,12 +456,8 @@ void CFontRipper::_CalcFontLineDistance()
 	ss << "\n" << cHeighest << cLowest << endl;
 
 	sText = ss.str();
-	wsText = _ConvertStringToWide(sText);
-	FillRect(m_hDc, &rText, (HBRUSH)GetStockObject(BLACK_BRUSH));
-	DrawText(m_hDc, wsText.c_str(), wsText.length(), &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
-
-	_ExportDcToBitmap(bmAll);
-	GetNonBlackData(bmAll, pPos, bmSub);
+	
+   _CreateStringBitmapTrimmed(sText, bmSub, pPos);
 
 	int iDoubleHeight = bmSub.GetHeight();
 	int iLineDistance = iDoubleHeight - 2 * iSingleHeight;

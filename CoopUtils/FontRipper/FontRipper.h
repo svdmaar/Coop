@@ -23,7 +23,7 @@ class CFontRipper : public CSingleSizeFont
 
 	void _ExportDcToBitmap(CBitmap & _bmOut);
 	void _SelectFontAndSize(const std::string & _sFontName, int _iSize);
-	void _CreateStringBitmap(const std::string & _sText, CBitmap & _bmOut, POINT & _pos);
+	void _CreateStringBitmapTrimmed(const std::string & _sText, CBitmap & _bmOut, POINT & _pos);
 	int _CalcD(char _c1, char _c2);
 	void _CalcSpaceSize();
 	void _FillCharDescs_BitmapUpperLeft();

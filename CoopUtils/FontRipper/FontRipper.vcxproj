@@ -77,6 +77,7 @@
     <ClCompile Include="..\..\Coop\Bitmap.cpp" />
     <ClCompile Include="..\IniFileReader\IniFile.cpp" />
     <ClCompile Include="BitmapUtils.cpp" />
+    <ClCompile Include="FontRenderWindow.cpp" />
     <ClCompile Include="FontRipper.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="SingleSizeFont.cpp" />
@@ -88,6 +89,7 @@
     <ClInclude Include="BitmapUtils.h" />
     <ClInclude Include="CharDesc.h" />
     <ClInclude Include="CharPosition.h" />
+    <ClInclude Include="FontRenderWindow.h" />
     <ClInclude Include="FontRipper.h" />
     <ClInclude Include="SingleSizeFont.h" />
   </ItemGroup>

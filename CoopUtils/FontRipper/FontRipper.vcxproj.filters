@@ -29,6 +29,9 @@
     <ClCompile Include="FontRipper.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="FontRenderWindow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\Coop\Bitmap.h">
@@ -53,6 +56,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="FontRipper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FontRenderWindow.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
