@@ -62,8 +62,8 @@ bool CFontRenderWindow::Create()
 	dwStyle = WS_CAPTION | WS_VISIBLE | WS_SYSMENU;
  	rClient.left = 100;
 	rClient.top = 100;
-	rClient.right = 200;
-	rClient.bottom = 300;
+	rClient.right = 600;
+	rClient.bottom = 800;
 
 	windowClass.cbSize = sizeof(windowClass);
 	windowClass.lpszClassName = g_className;
@@ -213,4 +213,19 @@ CBitmap CFontRenderWindow::RenderGreyString(const std::string& _sText, POINT& _p
    }
 
    return bmOut;
+}
+
+void CFontRenderWindow::SelectFontAndSize(const string & _sFontName, int _iSize)
+{
+   HDC hDc = GetDC(m_hWindow);
+
+	SetTextColor(hDc, 0xffffL);
+	SetBkColor(hDc, 0);
+
+	wstring wsFontName = _ConvertStringToWide(_sFontName);
+	const wchar_t * pwcFontName = wsFontName.c_str();
+
+	HFONT font = CreateFont(_iSize, 0, 0, 0, 400, FALSE, FALSE, FALSE, ANSI_CHARSET, 
+		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, pwcFontName);
+	SelectObject(hDc, font);
 }

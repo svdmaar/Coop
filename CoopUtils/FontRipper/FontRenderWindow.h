@@ -23,4 +23,5 @@ public:
    bool Destroy();
    CBitmap RenderString(const std::string& _sText);
    CBitmap RenderGreyString(const std::string& _sText, POINT& _pos);
+   void SelectFontAndSize(const std::string & _sFontName, int _iSize);
 };

@@ -3,6 +3,7 @@
 #include "../../Coop/Bitmap.h"
 #include "BitmapUtils.h"
 #include "../IniFileReader/IniFile.h"
+#include "FontRenderWindow.h"
 
 #include "SingleSizeFont.h"
 
@@ -18,8 +19,9 @@ using namespace std;
 
 class CFontRipper : public CSingleSizeFont
 {
-	HDC m_hDc;
+	//HDC m_hDc;
 	ofstream m_ofOut;
+   CFontRenderWindow m_renderWindow;
 
 	void _ExportDcToBitmap(CBitmap & _bmOut);
 	void _SelectFontAndSize(const std::string & _sFontName, int _iSize);

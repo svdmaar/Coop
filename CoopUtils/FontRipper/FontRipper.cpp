@@ -3,14 +3,16 @@
 #include <minmax.h>
 
 const int g_iMinChar = 33;
-const int g_iMaxChar = 127; // exclusive
+//const int g_iMaxChar = 127; // exclusive
+const int g_iMaxChar = 40; // exclusive
 const int g_iTextRectSize = 512;
 
 CFontRipper::CFontRipper()
 {
-	m_hDc = 0;
+	//m_hDc = 0;
 }
 
+/*
 void CFontRipper::_ExportDcToBitmap(CBitmap & _bmOut)
 {
 	int iWidth = GetDeviceCaps(m_hDc, HORZRES);
@@ -83,6 +85,12 @@ void CFontRipper::_CreateStringBitmapTrimmed(const string & _sText, CBitmap & _b
 	_ExportDcToBitmap(bmFull);
 
 	GetNonBlackData(bmFull, _pos, _bmOut);
+}
+*/
+
+void CFontRipper::_CreateStringBitmapTrimmed(const string & _sText, CBitmap & _bmOut, POINT & _pos)
+{
+   _bmOut = m_renderWindow.RenderGreyString(_sText, _pos);
 }
 
 int CFontRipper::_CalcD(char _c1, char _c2)
@@ -479,12 +487,15 @@ bool CFontRipper::RipFont(const std::string & _sFontName, int _iFontSize)
 	int iWidth = GetDeviceCaps(hDcDesktop, HORZRES);
 	int iHeight = GetDeviceCaps(hDcDesktop, VERTRES);
 
-	m_hDc = CreateCompatibleDC(hDcDesktop);
-	HBITMAP hBmp = CreateCompatibleBitmap(m_hDc, iWidth, iHeight);
-	SelectObject(m_hDc, hBmp);
+	//m_hDc = CreateCompatibleDC(hDcDesktop);
+	//HBITMAP hBmp = CreateCompatibleBitmap(m_hDc, iWidth, iHeight);
+	//SelectObject(m_hDc, hBmp);
 
-	_SelectFontAndSize(_sFontName, _iFontSize);
-	SelectObject(m_hDc, GetStockObject(BLACK_BRUSH));
+	//_SelectFontAndSize(_sFontName, _iFontSize);
+   m_renderWindow.Create();
+   m_renderWindow.SelectFontAndSize(_sFontName, _iFontSize);
+
+	//SelectObject(m_hDc, GetStockObject(BLACK_BRUSH));
 
 	m_sFontName = _sFontName;
 	m_iWindowsFontHeight = _iFontSize;
