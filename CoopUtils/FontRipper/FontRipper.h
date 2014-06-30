@@ -19,7 +19,6 @@ using namespace std;
 
 class CFontRipper : public CSingleSizeFont
 {
-	//HDC m_hDc;
 	ofstream m_ofOut;
    CFontRenderWindow m_renderWindow;
 
@@ -42,6 +41,7 @@ class CFontRipper : public CSingleSizeFont
 	void _MoveFontUp();
 	void _WriteToBmpIni(const string & _sOutName);
 	string _SanitizeFileNameBase(const string & _sFileBase);
+   bool _FileExists(const string & _sPath);
 
 	// TODO: Get nonblack data.
 
@@ -51,5 +51,5 @@ public:
 	CFontRipper();
 
 	bool RipFont(const std::string & _sFontName, int _iFontSize);
-
+   bool GenerateBmps(const std::string & _sFontName, int _iFontSize);
 };

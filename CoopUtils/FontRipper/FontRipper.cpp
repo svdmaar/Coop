@@ -9,84 +9,8 @@ const int g_iTextRectSize = 512;
 
 CFontRipper::CFontRipper()
 {
-	//m_hDc = 0;
+	
 }
-
-/*
-void CFontRipper::_ExportDcToBitmap(CBitmap & _bmOut)
-{
-	int iWidth = GetDeviceCaps(m_hDc, HORZRES);
-	int iHeight = GetDeviceCaps(m_hDc, VERTRES);
-
-	_bmOut = CBitmap(iWidth, iHeight, 0);
-
-	for(int iRow = 0; iRow < iHeight; iRow++)
-	{
-		for(int iColumn = 0; iColumn < iWidth; iColumn++)
-		{
-			COLORREF pixDc = GetPixel(m_hDc, iColumn, iRow);
-
-			_bmOut.SetPixel(iRow, iColumn, pixDc);
-		}
-	}
-}
-
-wstring CFontRipper::_ConvertStringToWide(const string & _sText)
-{
-	int nLength = _sText.length();
-	wchar_t * pwcBuffer = new wchar_t[nLength + 1];
-
-	ZeroMemory(pwcBuffer, sizeof(wchar_t) * (nLength + 1));
-	char * pcBuffer = (char *)(wchar_t *)pwcBuffer;
-
-	for(int i = 0; i < nLength; i++)
-	{
-		int iTargetIndex = i * 2;
-		pcBuffer[iTargetIndex] = _sText[i];
-	}
-
-	wstring wsOut(pwcBuffer);
-	delete [] pwcBuffer;
-
-	return wsOut;
-}
-
-void CFontRipper::_SelectFontAndSize(const string & _sFontName, int _iSize)
-{
-	SetTextColor(m_hDc, 0xffffL);
-	SetBkColor(m_hDc, 0);
-
-	wstring wsFontName = _ConvertStringToWide(_sFontName);
-	const wchar_t * pwcFontName = wsFontName.c_str();
-
-	HFONT font = CreateFont(_iSize, 0, 0, 0, 400, FALSE, FALSE, FALSE, ANSI_CHARSET, 
-		OUT_DEFAULT_PRECIS, CLIP_DEFAULT_PRECIS, DEFAULT_QUALITY, DEFAULT_PITCH, pwcFontName);
-	SelectObject(m_hDc, font);
-}
-
-void CFontRipper::_CreateStringBitmapTrimmed(const string & _sText, CBitmap & _bmOut, POINT & _pos)
-{
-   wstring wsText = _ConvertStringToWide(_sText);
-
-	RECT rText;
-	ZeroMemory(&rText, sizeof(rText));
-
-	rText.left = rText.top;
-	rText.right = rText.bottom = g_iTextRectSize;
-
-	// TODO: still necessary?
-	SetTextColor(m_hDc, 0xffffffL);
-	SetBkColor(m_hDc, 0);
-
-	FillRect(m_hDc, &rText, (HBRUSH)GetStockObject(BLACK_BRUSH));
-   DrawText(m_hDc, wsText.c_str(), -1, &rText, DT_LEFT | DT_TOP | DT_NOPREFIX);
-
-	CBitmap bmFull;
-	_ExportDcToBitmap(bmFull);
-
-	GetNonBlackData(bmFull, _pos, _bmOut);
-}
-*/
 
 void CFontRipper::_CreateStringBitmapTrimmed(const string & _sText, CBitmap & _bmOut, POINT & _pos)
 {
@@ -487,15 +411,8 @@ bool CFontRipper::RipFont(const std::string & _sFontName, int _iFontSize)
 	int iWidth = GetDeviceCaps(hDcDesktop, HORZRES);
 	int iHeight = GetDeviceCaps(hDcDesktop, VERTRES);
 
-	//m_hDc = CreateCompatibleDC(hDcDesktop);
-	//HBITMAP hBmp = CreateCompatibleBitmap(m_hDc, iWidth, iHeight);
-	//SelectObject(m_hDc, hBmp);
-
-	//_SelectFontAndSize(_sFontName, _iFontSize);
    m_renderWindow.Create();
    m_renderWindow.SelectFontAndSize(_sFontName, _iFontSize);
-
-	//SelectObject(m_hDc, GetStockObject(BLACK_BRUSH));
 
 	m_sFontName = _sFontName;
 	m_iWindowsFontHeight = _iFontSize;
@@ -516,4 +433,74 @@ bool CFontRipper::RipFont(const std::string & _sFontName, int _iFontSize)
 	_WriteToBmpIni(sBaseName);
 
 	return true;
+}
+
+bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
+{
+   stringstream ssDir;
+
+   ssDir << _sFontName << "_" << _iFontSize << "/";
+
+   string sDir = ssDir.str();
+   for (int i = 0; i < (int)sDir.length(); i++) {
+      if (sDir.at(i) == ' ') {
+         sDir.at(i) = '_';
+      }
+   }
+
+   wstring wsDir = ConvertStringToWide(sDir);
+   CreateDirectory(wsDir.c_str(), NULL);
+
+   int iStartChar = g_iMinChar;
+
+   string sLastCharFile = sDir + "done.txt";
+   if (_FileExists(sLastCharFile)) {
+      ifstream isLastChar(sLastCharFile);
+
+      int iLastChar;
+      isLastChar >> iLastChar;
+
+      iStartChar = iLastChar + 1;
+
+      isLastChar.close();
+   }
+
+   m_renderWindow.Create();
+   m_renderWindow.SelectFontAndSize(_sFontName, _iFontSize);
+
+   for (int iChar = iStartChar; iChar < g_iMaxChar; iChar++) {
+      char buffer[2];
+
+      buffer[0] = (char)iChar;
+      buffer[1] = '\0';
+
+      stringstream ssOutputFile;
+      ssOutputFile << sDir << iChar << ".bmp";
+
+      CBitmap bmFull = m_renderWindow.RenderString(buffer);
+      bmFull.Save(ssOutputFile.str());
+
+      ofstream osLastChar(sLastCharFile);
+      osLastChar << iChar << endl;
+      osLastChar.close();
+   }
+   
+
+   return true;
+}
+
+bool CFontRipper::_FileExists(const string & _sPath)
+{
+   FILE * pFile = NULL;
+
+   pFile = fopen(_sPath.c_str(), "r");
+
+   bool bExists = pFile != NULL;
+
+   if (pFile != NULL) 
+   {
+      fclose(pFile);
+   }
+
+   return bExists;
 }

@@ -17,6 +17,7 @@ class CFontRenderWindow
    void _ExportDcToBitmap(HDC _hDc, CBitmap & _bmOut);
    std::wstring _ConvertStringToWide(const std::string & _sText);
    void _ClearDc(HDC _hDc);
+   void _ProcessMessages();
 
 public:
    bool Create();

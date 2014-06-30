@@ -6,3 +6,4 @@
 #include "../../Coop/Bitmap.h"
 
 void GetNonBlackData(const CBitmap& bmFull, POINT& pos, CBitmap& bmOut);
+std::wstring ConvertStringToWide(const std::string& _sText);

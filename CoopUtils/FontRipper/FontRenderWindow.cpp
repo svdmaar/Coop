@@ -80,10 +80,22 @@ bool CFontRenderWindow::Create()
    m_hWindow = CreateWindowEx(dwStyleEx, g_className, g_caption, dwStyle, rClient.left, 
 		rClient.top, rClient.right - rClient.left, rClient.bottom - rClient.top, NULL, NULL, GetModuleHandle(NULL), NULL);
 
-   for (int i = 1; i < 10; i++)
+   _ProcessMessages();
+
+	return true;
+}
+
+void CFontRenderWindow::_ProcessMessages()
+{
+   while(true)
 	{
 		MSG message;
+
 		BOOL bMessageWaiting = PeekMessage(&message, m_hWindow, 0, 0, PM_REMOVE);
+      if (!bMessageWaiting)
+      {
+         break;
+      }
 
 		if(bMessageWaiting)
 		{
@@ -96,8 +108,6 @@ bool CFontRenderWindow::Create()
 			DispatchMessage(&message);
 		}
 	}
-
-	return true;
 }
 
 CBitmap CFontRenderWindow::RenderString(const std::string& _sText)
@@ -145,6 +155,8 @@ void CFontRenderWindow::_ExportDcToBitmap(HDC _hDc, CBitmap & _bmOut)
 
 			_bmOut.SetPixel(iRow, iColumn, pixDc);
 		}
+
+      _ProcessMessages();
 	}
 }
 

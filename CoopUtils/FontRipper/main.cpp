@@ -72,42 +72,9 @@ void CheckFontBmps()
 
 int main()
 {
-   /*
-   CFontRenderWindow window;
-   window.Create();
-
-   for (char c = 'A'; c <= 'C'; c++) {
-      cout << c << "..." << endl;
-
-      char buffer[2];
-
-      buffer[0] = c;
-      buffer[1] = '\0';
-
-      string sText = buffer;
-      string sFileName = "windowed/" + sText + "_window.bmp";
-
-      //CBitmap bmText = window.RenderString(sText);
-      POINT pos;
-      CBitmap bmText = window.RenderGreyString(sText, pos);
-      bmText.Save(sFileName);
-   }
-   */
-
-   //CBitmap bmText = window.RenderString("S");
-   //bmText.Save("windowed/S_window.bmp");
-
-   //Sleep(5000);
-
-   //return 0;
-
-
-	//CheckFontBmps();
-
-	//return 0;
-
 	CFontRipper fontRipper;
-	fontRipper.RipFont("Arial Black", 200);
+	//fontRipper.RipFont("Arial Black", 200);
+   fontRipper.GenerateBmps("Arial Black", 200);
 
 	return 0;
 

@@ -1,5 +1,7 @@
 #include "BitmapUtils.h"
 
+using namespace std;
+
 void GetNonBlackData(const CBitmap& bmFull, POINT& pos, CBitmap& bmOut)
 {
 	const DWORD dwBackground = 0x0l;
@@ -48,4 +50,24 @@ void GetNonBlackData(const CBitmap& bmFull, POINT& pos, CBitmap& bmOut)
 
 	pos.x = rChar.left;
 	pos.y = rChar.top;
+}
+
+std::wstring ConvertStringToWide(const std::string& _sText)
+{
+	int nLength = _sText.length();
+	wchar_t * pwcBuffer = new wchar_t[nLength + 1];
+
+	ZeroMemory(pwcBuffer, sizeof(wchar_t) * (nLength + 1));
+	char * pcBuffer = (char *)pwcBuffer;
+
+	for(int i = 0; i < nLength; i++)
+	{
+		int iTargetIndex = i * 2;
+		pcBuffer[iTargetIndex] = _sText[i];
+	}
+
+	wstring wsOut(pwcBuffer);
+	delete [] pwcBuffer;
+
+	return wsOut;
 }
