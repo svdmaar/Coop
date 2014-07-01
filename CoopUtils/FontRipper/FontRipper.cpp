@@ -451,11 +451,14 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
    wstring wsDir = ConvertStringToWide(sDir);
    CreateDirectory(wsDir.c_str(), NULL);
 
+   int iStage = 0; // 0 = simple output, 1 = "A." and ".A", 2 = "AA" and "A A"
    int iStartChar = g_iMinChar;
 
    string sLastCharFile = sDir + "done.txt";
    if (_FileExists(sLastCharFile)) {
       ifstream isLastChar(sLastCharFile);
+
+      isLastChar >> iStage;
 
       int iLastChar;
       isLastChar >> iLastChar;
@@ -468,23 +471,91 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
    m_renderWindow.Create();
    m_renderWindow.SelectFontAndSize(_sFontName, _iFontSize);
 
-   for (int iChar = iStartChar; iChar < g_iMaxChar; iChar++) {
-      char buffer[2];
+   if (iStage == 0) {
+      for (int iChar = iStartChar; iChar < g_iMaxChar; iChar++) {
+         char buffer[2];
 
-      buffer[0] = (char)iChar;
-      buffer[1] = '\0';
+         buffer[0] = (char)iChar;
+         buffer[1] = '\0';
+
+         stringstream ssOutputFile;
+         ssOutputFile << sDir << "0_" << iChar << ".bmp";
+
+         CBitmap bmFull = m_renderWindow.RenderString(buffer);
+         bmFull.Save(ssOutputFile.str());
+
+         ofstream osLastChar(sLastCharFile);
+         osLastChar << iStage << " " << iChar << endl;
+         osLastChar.close();
+      }
+      
+      iStage = 1;
+   }
+
+   if (iStage == 1) {
+      for (int iChar = iStartChar; iChar < g_iMaxChar; iChar++) {
+         char buffer[3];
+
+         buffer[0] = 'A';
+         buffer[1] = (char)iChar;
+         buffer[2] = '\0';
+
+         stringstream ssOutputFile;
+         ssOutputFile << sDir << "1_0_" << iChar << ".bmp";
+
+         CBitmap bmFull = m_renderWindow.RenderString(buffer);
+         bmFull.Save(ssOutputFile.str());
+
+         buffer[0] = (char)iChar;
+         buffer[1] = 'A';
+         buffer[2] = '\0';
+
+         ssOutputFile.str("");
+         ssOutputFile << sDir << "1_1_" << iChar << ".bmp";
+
+         bmFull = m_renderWindow.RenderString(buffer);
+         bmFull.Save(ssOutputFile.str());
+
+         ofstream osLastChar(sLastCharFile);
+         osLastChar << iStage << " " << iChar << endl;
+         osLastChar.close();
+      }
+      
+      iStage = 2;
+   }
+
+   if (iStage == 2) {
+      char buffer[4];
+
+      buffer[0] = 'A';
+      buffer[1] = 'A';
+      buffer[2] = '\0';
 
       stringstream ssOutputFile;
-      ssOutputFile << sDir << iChar << ".bmp";
+      ssOutputFile << sDir << "2_0.bmp";
 
       CBitmap bmFull = m_renderWindow.RenderString(buffer);
       bmFull.Save(ssOutputFile.str());
 
+      buffer[0] = 'A';
+      buffer[1] = ' ';
+      buffer[2] = 'A';
+      buffer[3] = '\0';
+
+      ssOutputFile.str("");
+      ssOutputFile << sDir << "2_1.bmp";
+
+      bmFull = m_renderWindow.RenderString(buffer);
+      bmFull.Save(ssOutputFile.str());
+
       ofstream osLastChar(sLastCharFile);
-      osLastChar << iChar << endl;
+      osLastChar << iStage << " " << 0 << endl;
       osLastChar.close();
+
+      iStage = 3;
    }
-   
+
+   // TODO: still need to calculate line height. This requires height of all chars.
 
    return true;
 }
