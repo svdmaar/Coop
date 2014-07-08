@@ -490,6 +490,7 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
       }
       
       iStage = 1;
+      iStartChar = g_iMinChar;
    }
 
    if (iStage == 1) {
@@ -522,6 +523,7 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
       }
       
       iStage = 2;
+      iStartChar = g_iMinChar;
    }
 
    if (iStage == 2) {
