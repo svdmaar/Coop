@@ -1,7 +1,11 @@
 #include <iostream>
+#include <fstream>
+
+#include "../../Coop/Bitmap.h"
 
 using namespace std;
 
+/*
 #pragma pack(1)
 struct SBitmapHeader
 {
@@ -23,6 +27,7 @@ struct SBitmapHeader
 	unsigned long m_biClrImportant;
 };
 #pragma pack()
+*/
 
 void PrintBitmapHeaderFields(const SBitmapHeader & _header)
 {
@@ -73,10 +78,35 @@ void PrintCalibrateBmpHeader()
    fclose(pFile);
 }
 
+void PrintCalibrateBmpHeaderIfstream()
+{
+   ifstream isBmp("calibrate.bmp", ifstream::binary | ifstream::in);
+
+   SBitmapHeader header;
+   isBmp.read((char *)(void *)&header, sizeof(header));
+
+   PrintBitmapHeaderFields(header);
+
+   isBmp.close();
+}
+
+void TestCppBitmapReadWrite()
+{
+   CBitmap bm1;
+   bm1.Load("24bit_in.bmp");
+   bm1.Save("32bit_out1.bmp");
+
+   CBitmap bm2;
+   bm2.Load("32bit_in.bmp");
+   bm2.Save("32bit_out2.bmp");
+}
+
 int main()
 {
    //PrintTypeSizes();
-   PrintCalibrateBmpHeader();
+   //PrintCalibrateBmpHeader();
+   //PrintCalibrateBmpHeaderIfstream();
+   TestCppBitmapReadWrite();
 
    return 0;
 }

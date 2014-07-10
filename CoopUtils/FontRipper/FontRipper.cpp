@@ -3,8 +3,8 @@
 #include <minmax.h>
 
 const int g_iMinChar = 33;
-//const int g_iMaxChar = 127; // exclusive
-const int g_iMaxChar = 40; // exclusive
+const int g_iMaxChar = 127; // exclusive
+//const int g_iMaxChar = 40; // exclusive
 const int g_iTextRectSize = 512;
 
 CFontRipper::CFontRipper()

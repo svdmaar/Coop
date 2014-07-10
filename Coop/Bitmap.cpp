@@ -3,14 +3,7 @@
 #include <assert.h>
 #include <memory.h>
 #include <stdio.h>
-
-#ifndef min
-#define min(a, b)  (((a) < (b)) ? (a) : (b)) 
-#endif
-
-#ifndef max
-#define max(a, b)  (((a) > (b)) ? (a) : (b)) 
-#endif
+#include <fstream>
 
 using namespace std;
 
@@ -98,19 +91,25 @@ void CBitmap::SetPixel(int _iRow, int _iColumn, DWORD _dwColor)
 bool CBitmap::Load(string _fileName)
 {
 	// TODO: deal with negative height
+   /*
 	FILE *pInFile = NULL;
 	pInFile = fopen(_fileName.c_str(), "rb");
+    */
 
-	if(pInFile == NULL)
+   ifstream isInFile(_fileName, ifstream::binary | ifstream::in);
+
+	if(!isInFile)
 		return false;
 
 	BITMAPFILEHEADER fileHeader;
 
-	fread(&fileHeader, sizeof(fileHeader), 1, pInFile);
+	//fread(&fileHeader, sizeof(fileHeader), 1, pInFile);
+   isInFile.read((char *)&fileHeader, sizeof(fileHeader));
 
 	BITMAPINFOHEADER infoHeader;
 
-	fread(&infoHeader, sizeof(infoHeader), 1, pInFile);
+	//fread(&infoHeader, sizeof(infoHeader), 1, pInFile);
+   isInFile.read((char *)&infoHeader, sizeof(infoHeader));
 
 	if(m_pData != NULL)
 		delete [] m_pData;
@@ -140,22 +139,26 @@ bool CBitmap::Load(string _fileName)
 			if(infoHeader.biBitCount == 24)
 			{
 				BYTE buffer[3];
-				fread(buffer, sizeof(buffer), 1, pInFile);
+				//fread(buffer, sizeof(buffer), 1, pInFile);
+            isInFile.read((char *)buffer, sizeof(buffer));
 				dwValue = (((int)buffer[2]) << 16) |  (((int)buffer[1]) << 8) | (((int)buffer[0]));
 			}
 			else
 			{
-				fread(&dwValue, sizeof(dwValue), 1, pInFile);
+				//fread(&dwValue, sizeof(dwValue), 1, pInFile);
+            isInFile.read((char *)&dwValue, sizeof(dwValue));
 			}
 
 
 			m_pData[iIndex] = dwValue;
 		}
 
-		fseek(pInFile, iSkippedByteCount, SEEK_CUR);
+		//fseek(pInFile, iSkippedByteCount, SEEK_CUR);
+      isInFile.seekg(iSkippedByteCount, ifstream::cur);
 	}
 
-	fclose(pInFile);
+	//fclose(pInFile);
+   isInFile.close();
 
 	return true;
 }
@@ -183,16 +186,23 @@ bool CBitmap::Save(string _fileName) const
 	infoHeader.biClrUsed= 0;
 	infoHeader.biClrImportant = 0;
 	
-	FILE *pOutFile = NULL;
-	pOutFile = fopen(_fileName.c_str(), "wb");
-	fwrite(&fileHeader, sizeof(fileHeader), 1, pOutFile);
-	fwrite(&infoHeader, sizeof(infoHeader), 1, pOutFile);
+	//FILE *pOutFile = NULL;
+	//pOutFile = fopen(_fileName.c_str(), "wb");
+   ofstream osOutFile(_fileName, ofstream::out | ofstream::binary);
+
+	//fwrite(&fileHeader, sizeof(fileHeader), 1, pOutFile);
+   osOutFile.write((char *)&fileHeader, sizeof(fileHeader));
+
+	//fwrite(&infoHeader, sizeof(infoHeader), 1, pOutFile);
+   osOutFile.write((char *)&infoHeader, sizeof(infoHeader));
 	
 	for(int iRowIndex = (m_iHeight - 1); iRowIndex >= 0; iRowIndex--)
 	{
-		fwrite(m_pData + iRowIndex * m_iWidth, sizeof(DWORD), m_iWidth, pOutFile);
+		//fwrite(m_pData + iRowIndex * m_iWidth, sizeof(DWORD), m_iWidth, pOutFile);
+      osOutFile.write((char *)(m_pData + iRowIndex * m_iWidth), sizeof(DWORD) * m_iWidth);
 	}
-	fclose(pOutFile);
+	//fclose(pOutFile);
+   osOutFile.close();
 
 	return true;
 }
@@ -339,10 +349,10 @@ RECT CBitmap::GetTrimRect(DWORD _dwIgnoredColor) const
 			DWORD dwPixel = GetPixel(iRowIndex, iColumnIndex);
 			if(dwPixel != _dwIgnoredColor)
 			{
-				out.left = min(out.left, iColumnIndex);
-				out.top = min(out.top, iRowIndex);
-				out.right = max(out.right, iColumnIndex + 1);
-				out.bottom = max(out.bottom, iRowIndex + 1);
+				out.left = _Min(out.left, iColumnIndex);
+				out.top = _Min(out.top, iRowIndex);
+				out.right = _Max(out.right, iColumnIndex + 1);
+				out.bottom = _Max(out.bottom, iRowIndex + 1);
 
 				bFound = true;
 			}
@@ -447,4 +457,24 @@ void CBitmap::DecodeColor(DWORD _dwColor, int& _iRed, int& _iGreen, int& _iBlue)
 	_iRed = (_dwColor >> 16) & 0xff;
 	_iGreen = (_dwColor >> 8) & 0xff;
 	_iBlue = _dwColor & 0xff;
+}
+
+int CBitmap::_Min(int _iA, int _iB)
+{
+   if (_iA < _iB)
+   {
+      return _iA;
+   }
+
+   return _iB;
+}
+
+int CBitmap::_Max(int _iA, int _iB)
+{
+   if (_iA > _iB)
+   {
+      return _iA;
+   }
+
+   return _iB;
 }

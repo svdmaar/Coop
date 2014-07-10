@@ -13,6 +13,9 @@ class CBitmap
 
 	void _CopyFromOtherBmp(const CBitmap& _bmp);
 
+   static int _Min(int _iA, int _iB);
+   static int _Max(int _iA, int _iB);
+
 public:
 	CBitmap();
 	CBitmap(RECT _size);
