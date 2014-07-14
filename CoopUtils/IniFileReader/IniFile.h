@@ -26,11 +26,14 @@ public:
 	~CIniFile();
 
 	bool Load(const std::string& _sFileName);
+   bool Save(const std::string& _sFileName);
 
 	std::string GetValueString(const std::string& _sBlock, const std::string& _sKey) const;
 	int GetValueInt(const std::string& _sBlock, const std::string& _sKey) const;
 	std::vector<int> GetValueIntVector(const std::string& _sBlock, const std::string& _sKey) const;
 	POINT GetValuePoint(const std::string& _sBlock, const std::string& _sKey) const;
+
+   void SetValueInt(const std::string& _sBlock, const std::string& _sKey, int _iValue);
 
 	bool BlockExists(const std::string & _sBlock) const;
 

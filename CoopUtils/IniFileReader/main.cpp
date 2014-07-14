@@ -21,5 +21,11 @@ int main()
 	POINT pTest = iniFile.GetValuePoint("testblock", "testPoint");
 	cout << "(" << pTest.x << ", " << pTest.y << ")" << endl;
 
+   iniFile.SetValueInt("extraBlock1", "key1", 12);
+
+   iniFile.SetValueInt("extraBlock2", "key1", 23);
+   iniFile.SetValueInt("extraBlock2", "key1", 24);
+   iniFile.Save("testout.ini");
+
 	return 0;
 }

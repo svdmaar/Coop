@@ -270,3 +270,43 @@ POINT CIniFile::GetValuePoint(const string & _sBlock, const string & _sKey) cons
 
 	return pOut;
 }
+
+bool CIniFile::Save(const std::string& _sFileName)
+{
+   ofstream osOut(_sFileName);
+
+	map<string, SIniBlock>::const_iterator iBlock;
+
+	for(iBlock = m_mIniBlocks.begin(); iBlock != m_mIniBlocks.end(); iBlock++)
+	{
+		string sTitle = (*iBlock).first;
+		const SIniBlock& block = (*iBlock).second;
+
+      osOut << "[" << sTitle << "]" << endl;
+
+		map<string, string>::const_iterator iValue;
+
+		for(iValue = block.m_mLines.begin(); iValue != block.m_mLines.end(); iValue++)
+		{
+			string sKey = (*iValue).first;
+			string sValue = (*iValue).second;
+
+			osOut << sKey << " = " << sValue << endl;
+		}
+
+      osOut << endl;
+	}
+
+   return true;
+}
+
+void CIniFile::SetValueInt(const string& _sBlock, const string& _sKey, int _iValue)
+{
+   SIniBlock& iniBlock = m_mIniBlocks[_sBlock];
+
+   stringstream ssValue;
+   ssValue << _iValue;
+
+   string sValue = ssValue.str();
+   iniBlock.m_mLines[_sKey] = sValue;
+}

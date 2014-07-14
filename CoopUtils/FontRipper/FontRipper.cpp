@@ -272,7 +272,11 @@ string CFontRipper::_SanitizeFileNameBase(const string & _sFileBase)
 void CFontRipper::_WriteToBmpIni(const string & _sOutName)
 {
 	string sSanitizedFileBase = _SanitizeFileNameBase(_sOutName);
-	string sPathAndBase = "out_chars/" + sSanitizedFileBase + ".";
+
+   // TODO: add path    ,
+	string sPathAndBase = sSanitizedFileBase + ".";
+   //                   ^
+
 	string sIniFileName = sPathAndBase + "ini";
 	string sBmpFileName = sPathAndBase + "bmp";
 
@@ -371,7 +375,7 @@ void CFontRipper::_CalcFontLineDistance()
 	char cLowest = (char)(g_iMinChar + iLowest);
 
 	cout << "Calculating line distance..." << endl;
-	cout << "h: " << cHeighest << ", l: " << cLowest << endl;
+	cout << "h: " << cHeighest << " (" << iHeightest << "), l: " << cLowest << endl;
 
 	stringstream ss;
 	ss << cHeighest << cLowest;
@@ -471,6 +475,10 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
    m_renderWindow.Create();
    m_renderWindow.SelectFontAndSize(_sFontName, _iFontSize);
 
+   //debug
+   iStage = 3;
+
+   // Stage 0: output just the chars.
    if (iStage == 0) {
       for (int iChar = iStartChar; iChar < g_iMaxChar; iChar++) {
          char buffer[2];
@@ -493,6 +501,7 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
       iStartChar = g_iMinChar;
    }
 
+   // Stage 1: output chars with A on left and right sides.
    if (iStage == 1) {
       for (int iChar = iStartChar; iChar < g_iMaxChar; iChar++) {
          char buffer[3];
@@ -526,6 +535,7 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
       iStartChar = g_iMinChar;
    }
 
+   // Stage 2: output for calculating space size.
    if (iStage == 2) {
       char buffer[4];
 
@@ -555,6 +565,122 @@ bool CFontRipper::GenerateBmps(const std::string & _sFontName, int _iFontSize)
       osLastChar.close();
 
       iStage = 3;
+   }
+
+   m_vCharDescs.resize(g_iMaxChar - g_iMinChar);
+
+   // Stage 3: fill bitmap descs.
+   if (iStage == 3) {
+      // Get subbitmap + upper left data.
+      for (int iChar = g_iMinChar; iChar < g_iMaxChar; iChar++) {
+         cout << "stage 3-1 " << iChar << endl;
+
+         stringstream ssInputFile;
+         ssInputFile << sDir << "0_" << iChar << ".bmp";
+         string sInputFile = ssInputFile.str();
+
+         CBitmap bmFull;
+         bmFull.Load(sInputFile);
+         bmFull = bmFull.MakeGrayValue();
+
+         CBitmap bmChar;
+         POINT pUpperLeft;
+         GetNonBlackData(bmFull, pUpperLeft, bmChar);
+
+         bmChar = bmChar.MakeGrayValue();
+
+         SCharDesc& charDesc = m_vCharDescs[iChar - g_iMinChar];
+
+         charDesc.m_bitmap = bmChar;
+         charDesc.m_pUpperLeft = pUpperLeft;
+      }
+
+      int iAWidth = m_vCharDescs['A' - g_iMinChar].m_bitmap.GetWidth();
+
+      // Calc left and right buffer.
+      for (int iChar = g_iMinChar; iChar < g_iMaxChar; iChar++) {
+         cout << "stage 3-2 " << iChar << endl;
+
+         stringstream ssInputFile;
+         ssInputFile << sDir << "1_0_" << iChar << ".bmp";
+         string sInputFile = ssInputFile.str();
+
+         CBitmap bmFull;
+         bmFull.Load(sInputFile);
+         bmFull.MakeGrayValue();
+
+         CBitmap bmLeftBuffer;
+         POINT pDummy;
+         GetNonBlackData(bmFull, pDummy, bmLeftBuffer);
+
+         ssInputFile.str("");
+         ssInputFile << sDir << "1_1_" << iChar << ".bmp";
+         sInputFile = ssInputFile.str();
+
+         bmFull.Load(sInputFile);
+         bmFull.MakeGrayValue();
+
+         CBitmap bmRightBuffer;
+         GetNonBlackData(bmFull, pDummy, bmRightBuffer);
+
+         SCharDesc& charDesc = m_vCharDescs[iChar - g_iMinChar];
+         int iWidth = charDesc.m_bitmap.GetWidth();
+
+         int iLeftBuffer = bmLeftBuffer.GetWidth() - iWidth - iAWidth;
+         int iRightBuffer = bmRightBuffer.GetWidth() - iWidth - iAWidth;
+
+         charDesc.m_iBufferLeft = iLeftBuffer;
+         charDesc.m_iBufferRight = iRightBuffer;
+      }
+
+      // Calc space size.
+      stringstream ssInputFile;
+      ssInputFile << sDir << "2_0.bmp";
+      string sInputFile = ssInputFile.str();
+
+      CBitmap bmFull;
+      bmFull.Load(sInputFile);
+      bmFull = bmFull.MakeGrayValue();
+
+      CBitmap bmWithoutSpace;
+      POINT pDummy;
+      GetNonBlackData(bmFull, pDummy, bmWithoutSpace);
+
+      ssInputFile.str("");
+      ssInputFile << sDir << "2_1.bmp";
+      sInputFile = ssInputFile.str();
+
+      bmFull.Load(sInputFile);
+      bmFull = bmFull.MakeGrayValue();
+
+      CBitmap bmWithSpace;
+      GetNonBlackData(bmFull, pDummy, bmWithSpace);
+
+      int iSpaceSize = bmWithSpace.GetWidth() - bmWithoutSpace.GetWidth();
+
+      m_sFontName = _sFontName;
+      m_iMinChar = g_iMinChar;
+      m_iMaxChar = g_iMaxChar;
+      m_iSpaceSize = iSpaceSize;
+      m_iWindowsFontHeight = _iFontSize;
+
+      _MoveFontUp();
+
+      _CalcFontHeight();
+      _CalcFontLineDistance();
+
+      _CreateBigBitmap();
+      _WriteToBmpIni(m_sFontName);
+
+      /*
+      m_ofOut.open("blah.ini");
+
+      _WriteInfoToIniFile();
+
+      m_bmBigBitmap.Save("blah.bmp");
+      */
+
+      iStage = 4;
    }
 
    // TODO: still need to calculate line height. This requires height of all chars.
